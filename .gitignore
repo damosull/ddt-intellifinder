@@ -7,6 +7,10 @@
 node_modules/
 dist/
 
+# Test reporting
+reports
+screenshots
+
 # Compiled Java class files
 *.class
 
