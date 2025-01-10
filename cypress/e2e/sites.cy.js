@@ -1,20 +1,23 @@
 /// <reference types="cypress" />
-import { LoginPage } from "../pom/Login.page";
-import { SideMenuPage } from "../pom/SideMenu.page";
+import { LoginPage } from "../support/pom/Login.page";
+import { SideMenuPage } from "../support/pom/SideMenu.page";
+import { CreateSitePage } from "../support/pom/sites/createSite.page";
 
 describe('Sites Test Suite', () => {
     const loginPage = new LoginPage();
     const sideMenuPage = new SideMenuPage();
+    const createSitePage = new CreateSitePage();
+    const timestamp = new Date().getTime();
 
     beforeEach(() => {
         cy.visit('/');
         loginPage.login();
-        sideMenuPage.openCategoriesPage(); // Reference 'openCategoriesPage()', create openSitesPage method & put it here
+        sideMenuPage.openSitesPage();
     });
 
     it('Create Site via the Sites page', () => {
-        // Similar to Create Category test. Create a site (entering the required fields), click save button
-        // Verify site is created (in the list)
+        const siteName = `Created Name - ${timestamp}`;
+        createSitePage.createSite(siteName);    
     });
 
     // Note: In the side menu, where we are clicking (openSitesPage), there is a 'Create new' option. You can also create a site via that page. We may need to create another test for that.
