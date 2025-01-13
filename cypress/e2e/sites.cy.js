@@ -1,12 +1,20 @@
 /// <reference types="cypress" />
 import { LoginPage } from "../support/pom/Login.page";
 import { SideMenuPage } from "../support/pom/SideMenu.page";
-import { CreateSitePage } from "../support/pom/sites/createSite.page";
+import { CreateSitePage } from "../support/pom/sites/CreateSite.page";
+import { UpdateSitePage } from "../support/pom/sites/UpdateSite.page";
+import { DeleteSitePage } from "../support/pom/sites/DeleteSite.page";
+import { SitesPage } from "../support/pom/sites/Sites.page";
+
 
 describe('Sites Test Suite', () => {
     const loginPage = new LoginPage();
     const sideMenuPage = new SideMenuPage();
     const createSitePage = new CreateSitePage();
+    const updateSitePage = new UpdateSitePage();
+    const deleteSitePage = new DeleteSitePage();
+    const sitePage = new SitesPage();
+
     const timestamp = new Date().getTime();
     const siteName = `Created Name - ${timestamp}`;
     const longitude = -74.005974; 
@@ -23,7 +31,7 @@ describe('Sites Test Suite', () => {
 
     // it('Search Site via Sites List page', () => {
     //     createSitePage.createSite(siteName,latitude,longitude);
-    //     createSitePage.searchSite(siteName,latitude,longitude);
+    //     sitePage.searchSite(siteName,latitude,longitude);
     // })
 
     // it('Edit Site via Sites List page', () => {
@@ -31,16 +39,16 @@ describe('Sites Test Suite', () => {
     //     let updatedLatitude = 35.689487;
     //     let updatedLongitude = 139.691711;
     //     let updateSiteName = "Updated "+siteName;
-    //     createSitePage.searchSite(siteName,latitude,longitude);
-    //     createSitePage.editSite(updateSiteName,updatedLatitude,updatedLongitude)
-    //     createSitePage.searchSite(updateSiteName,updatedLatitude,updatedLongitude)
+    //     sitePage.searchSite(siteName,latitude,longitude);
+    //     updateSitePage.updateSite(updateSiteName,updatedLatitude,updatedLongitude)
+    //     sitePage.searchSite(updateSiteName,updatedLatitude,updatedLongitude)
     // });
 
     it('Delete Site via Sites List page:', () => {
         createSitePage.createSite(siteName,latitude,longitude);
-        createSitePage.searchSite(siteName,latitude,longitude);
-        createSitePage.deleteSite()
-        createSitePage.searchSiteWithZeroRecord(siteName);
+        sitePage.searchSite(siteName,latitude,longitude);
+        deleteSitePage.deleteSite()
+        sitePage.searchSiteWithZeroRecord(siteName);
     });
 
 
