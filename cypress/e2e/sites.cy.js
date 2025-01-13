@@ -25,24 +25,24 @@ describe('Sites Test Suite', () => {
         sideMenuPage.openSitesPage();
     });
 
-    // it('Create Site via the Sites page', () => {
-    //     createSitePage.createSite(siteName,latitude,longitude);
-    // });
+    it('Create Site via the Sites page', () => {
+        createSitePage.createSite(siteName,latitude,longitude);
+    });
 
-    // it('Search Site via Sites List page', () => {
-    //     createSitePage.createSite(siteName,latitude,longitude);
-    //     sitePage.searchSite(siteName,latitude,longitude);
-    // })
+    it('Search Site via Sites List page', () => {
+        createSitePage.createSite(siteName,latitude,longitude);
+        sitePage.searchSite(siteName,latitude,longitude);
+    })
 
-    // it('Edit Site via Sites List page', () => {
-    //     createSitePage.createSite(siteName,latitude,longitude);
-    //     let updatedLatitude = 35.689487;
-    //     let updatedLongitude = 139.691711;
-    //     let updateSiteName = "Updated "+siteName;
-    //     sitePage.searchSite(siteName,latitude,longitude);
-    //     updateSitePage.updateSite(updateSiteName,updatedLatitude,updatedLongitude)
-    //     sitePage.searchSite(updateSiteName,updatedLatitude,updatedLongitude)
-    // });
+    it('Edit Site via Sites List page', () => {
+        createSitePage.createSite(siteName,latitude,longitude);
+        let updatedLatitude = 35.689487;
+        let updatedLongitude = 139.691711;
+        let updateSiteName = "Updated "+siteName;
+        sitePage.searchSite(siteName,latitude,longitude);
+        updateSitePage.updateSite(updateSiteName,updatedLatitude,updatedLongitude)
+        sitePage.searchSite(updateSiteName,updatedLatitude,updatedLongitude)
+    });
 
     it('Delete Site via Sites List page:', () => {
         createSitePage.createSite(siteName,latitude,longitude);
