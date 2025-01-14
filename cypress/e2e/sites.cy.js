@@ -1,11 +1,10 @@
 /// <reference types="cypress" />
 import { LoginPage } from "../support/pom/Login.page";
 import { SideMenuPage } from "../support/pom/SideMenu.page";
-import { CreateSitePage } from "../support/pom/sites/createSite.page";
+import { CreateSitePage } from "../support/pom/sites/CreateSite.page";
 import { UpdateSitePage } from "../support/pom/sites/UpdateSite.page";
 import { DeleteSitePage } from "../support/pom/sites/DeleteSite.page";
 import { SitesPage } from "../support/pom/sites/Sites.page";
-
 
 describe('Sites Test Suite', () => {
     const loginPage = new LoginPage();
@@ -16,9 +15,9 @@ describe('Sites Test Suite', () => {
     const sitePage = new SitesPage();
 
     const timestamp = new Date().getTime();
-    const siteName = `Created Name - ${timestamp}`;
-    const longitude = -74.005974; 
+    const longitude = -74.005974;
     const latitude = 40.712776;
+
     beforeEach(() => {
         cy.visit('/');
         loginPage.login();
@@ -26,28 +25,29 @@ describe('Sites Test Suite', () => {
     });
 
     it('Create & Search Site via Sites List page', () => {
-        createSitePage.createSite(siteName,latitude,longitude);
-        sitePage.searchSite(siteName,latitude,longitude);
+        const siteName = `Created Name - ${timestamp}`;
+        createSitePage.createSite(siteName, latitude, longitude);
+        sitePage.searchSite(siteName, latitude, longitude);
     })
 
     it('Edit Site via Sites List page', () => {
-        createSitePage.createSite(siteName,latitude,longitude);
+        const siteName = `Site to be updated - ${timestamp}`;
+        const updatedSiteName = `Updated Site - ${timestamp}`;
+        createSitePage.createSite(siteName, latitude, longitude);
         let updatedLatitude = 35.689487;
         let updatedLongitude = 139.691711;
-        let updateSiteName = "Updated "+siteName;
-        sitePage.searchSite(siteName,latitude,longitude);
-        updateSitePage.updateSite(updateSiteName,updatedLatitude,updatedLongitude)
-        sitePage.searchSite(updateSiteName,updatedLatitude,updatedLongitude)
+        sitePage.searchSite(siteName, latitude, longitude);
+        updateSitePage.updateSite(updatedSiteName, updatedLatitude, updatedLongitude)
+        sitePage.searchSite(updatedSiteName, updatedLatitude, updatedLongitude)
     });
 
     it('Delete Site via Sites List page:', () => {
-        createSitePage.createSite(siteName,latitude,longitude);
-        sitePage.searchSite(siteName,latitude,longitude);
+        const siteName = `Site to be deleted - ${timestamp}`;
+        createSitePage.createSite(siteName, latitude, longitude);
+        sitePage.searchSite(siteName, latitude, longitude);
         deleteSitePage.deleteSite()
-        sitePage.searchSiteWithZeroRecord(siteName);
+        sitePage.searchSiteWithNoResults(siteName);
     });
-
-
 
     // Investigate if the below tests can be automated. If they can, let me know & I'll check with the client if they want us to do them
 

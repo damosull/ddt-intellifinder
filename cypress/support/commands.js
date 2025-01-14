@@ -24,3 +24,7 @@
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
 import 'cypress-file-upload';
+
+Cypress.Commands.add('isVisibleWithText', { prevSubject: 'element' }, (subject, text) => {
+    cy.wrap(subject).should('be.visible').and('have.text', text);
+});
