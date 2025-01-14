@@ -1,7 +1,7 @@
 /// <reference types="cypress" />
 import { LoginPage } from "../support/pom/Login.page";
 import { SideMenuPage } from "../support/pom/SideMenu.page";
-import { CreateSitePage } from "../support/pom/sites/CreateSite.page";
+import { CreateSitePage } from "../support/pom/sites/createSite.page";
 import { UpdateSitePage } from "../support/pom/sites/UpdateSite.page";
 import { DeleteSitePage } from "../support/pom/sites/DeleteSite.page";
 import { SitesPage } from "../support/pom/sites/Sites.page";
@@ -25,11 +25,7 @@ describe('Sites Test Suite', () => {
         sideMenuPage.openSitesPage();
     });
 
-    it('Create Site via the Sites page', () => {
-        createSitePage.createSite(siteName,latitude,longitude);
-    });
-
-    it('Search Site via Sites List page', () => {
+    it('Create & Search Site via Sites List page', () => {
         createSitePage.createSite(siteName,latitude,longitude);
         sitePage.searchSite(siteName,latitude,longitude);
     })

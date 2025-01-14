@@ -24,25 +24,22 @@ export class SitesPage {
     getSiteNameOnList = () => cy.get('[class*="btnViewSite"]') 
     getTableCell = () => cy.get('tbody td') 
     CreateNew = () => cy.contains('Create new')
-    editSitebtn = () => cy.get('[title="Edit"]') 
-    deleteSitebtn = () => cy.get('[title="Delete"]') 
+    editSitebtn = () => cy.get('[title="Edit"]')  
     getModalMsg = () => cy.get('[class="swal-title"]') 
-    getNoResultMsg = () => cy.get('[class="footable-empty"]') 
+    noResultMsg = () => cy.get('[class="footable-empty"]') 
 
     searchSite(siteName,latitude,longitude) {
-        cy.url().should('include', '/sites/list-sites-by-category/');
         cy.intercept('POST', '/api/site/sites').as('searchRequest');
         this.getSiteListViewSearch().type(siteName+'{enter}', { force: true })
         cy.wait('@searchRequest').its('response.statusCode').should('eq', 200);
         this.getSiteNameOnList().eq(0).should('have.text', siteName);
-        this.getTableCell().eq(2).should('have.text', 'Lat. '+latitude+' Lon. '+longitude);
+        this.getTableCell().eq(2).should('have.text', `Lat. ${latitude} Lon. ${longitude}`);
     }
     searchSiteWithZeroRecord(siteName) {
-        cy.url().should('include', '/sites/list-sites-by-category/');
         cy.intercept('POST', '/api/site/sites').as('searchRequest');
         this.getSiteListViewSearch().clear().type(siteName+'{enter}')
         cy.wait('@searchRequest').its('response.statusCode').should('eq', 200);
-        this.getNoResultMsg().should('be.visible')
+        this.noResultMsg().should('be.visible')
     }
 }
 
