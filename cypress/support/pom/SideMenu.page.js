@@ -9,8 +9,9 @@ export class SideMenuPage {
         this.categoriesLink().click();
         cy.wait('@allCategories').its('response.statusCode').should('eq', 200);
     }
+
     openSitesPage() {
-          this.navbarToggle().click();
-          this.sitesLink().click();
+        this.navbarToggle().click();
+        this.sitesLink().click();
     }
 }
