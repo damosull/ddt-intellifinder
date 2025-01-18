@@ -6,6 +6,7 @@ import { UpdateSitePage } from "../support/pom/sites/UpdateSite.page";
 import { DeleteSitePage } from "../support/pom/sites/DeleteSite.page";
 import { SitesPage } from "../support/pom/sites/Sites.page";
 import { SitesMapPage } from "../support/pom/sites/SitesMap.page";
+import { SitesNearestPage } from "../support/pom/sites/SitesNearest.page";
 
 describe('Sites Test Suite', () => {
     const loginPage = new LoginPage();
@@ -15,6 +16,7 @@ describe('Sites Test Suite', () => {
     const deleteSitePage = new DeleteSitePage();
     const sitePage = new SitesPage();
     const sitesMapPage = new SitesMapPage();
+    const sitesNearestPage = new SitesNearestPage();
 
     const timestamp = new Date().getTime();
     const longitude = -74.005974;
@@ -56,14 +58,7 @@ describe('Sites Test Suite', () => {
         sitesMapPage.pageTitle().should('be.visible');
     });
 
-    it.skip('Search Sites via Sites > Nearest', () => {
-
-        // There's a 'Nearest' option in the side menu
-        // Investigate if/how this can be tested
-        // Maybe something like:
-        // Go to Sites > Nearest
-        // Verify records are sorted based on distance (nearest 1st)
-
-        // If you believe additional verification is required, please include it.
+    it('Search Sites via Sites > Nearest - verify distances are in ascending order', () => {
+        sitesNearestPage.openAndVerifyDistancesInAscendingOrder()
     });
 });
