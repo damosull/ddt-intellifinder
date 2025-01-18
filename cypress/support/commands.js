@@ -23,3 +23,10 @@
 //
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
+import 'cypress-file-upload';
+
+Cypress.Commands.add('extractDistance', (text) => {
+    const regex = /(\d+(\.\d+)?)\s*km away$/;
+    const match = text.match(regex);
+    return match ? parseFloat(match[1]) : null;
+});

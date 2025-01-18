@@ -104,7 +104,7 @@ The framework uses POM to abstract the UI elements and actions for better reusab
 ```javascript
 export class CategoriesPage {
     btnCreateCategory = () => cy.get('[routerlink="../create-category"]');
-    searchCategory(categoryName) {
+    searchCategory(categoryName) 
         this.txtSearch().clear().type(categoryName);
         this.btnSearch().click();
     }
