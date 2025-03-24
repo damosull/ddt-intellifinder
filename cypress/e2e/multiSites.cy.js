@@ -4,6 +4,7 @@ import { LoginPage } from "../support/pom/Login.page";
 import { SideMenuPage } from "../support/pom/SideMenu.page";
 
 import { MultiSitesPage } from "../support/pom/multisites/MultiSites.page";
+import { CreateMultiSitesPage } from "../support/pom/multisites/CreateMultiSites.page";
 
 //describe represents the test script that will be run for this spec for this page and it takes two arguments, description and a callback function.
 describe('MultiSites Test Suite', () => {
@@ -12,9 +13,10 @@ describe('MultiSites Test Suite', () => {
   const loginPage = new LoginPage();
   const sideMenuPage = new SideMenuPage();
 
-  const multiSites = new MultiSitesPage();
+  const multiSitesPage = new MultiSitesPage();
+  const createMultiSitesPage = new CreateMultiSitesPage();
 
-  //const timestamp = new Date().getTime();
+  const timestamp = new Date().getTime();
   const searchName = 'test';
 
   beforeEach(() => {
@@ -24,8 +26,14 @@ describe('MultiSites Test Suite', () => {
   });
 
   //each "it" section is an individual test that will be run it also takes two arguments, description and a callback.
-  it('Search MultiSites via MultiSites List page', () => {
-    const siteName = `Created Name - ${searchName}`;
-    multiSites.searchMultiSites(siteName);
+
+  //creates a new site with a unique name and then searches for this specific MultiSite
+  it('Create + Search MultiSites', () => {
+    const multiSiteName = `Created Name - ${searchName + timestamp}`;
+    multiSitesPage.btnCreateMultiSites().click();
+    createMultiSitesPage.createMultiSite(multiSiteName);
+    multiSitesPage.btnGoBack().click(); // goes back to add new MultiSite
+    multiSitesPage.btnGoBack().click(); //goes to view all MultiSites
+    multiSitesPage.searchMultiSites(multiSiteName);
   })
 })
