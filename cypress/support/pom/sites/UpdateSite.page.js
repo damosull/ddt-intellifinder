@@ -7,6 +7,7 @@ export class UpdateSitePage {
     toastSiteUpdated = () => cy.get('.toast-msg').contains('Site updated.');
 
     updateSite(siteName, latitude, longitude) {
+        
         this.btnEditSite().click()
         this.txtSiteName().clear().type(siteName)
         this.txtLatitude().clear().type(latitude)
