@@ -47,6 +47,7 @@ describe('MultiSites Test Suite', () => {
 
     multiSitesPage.searchMultiSites(multiSiteName);
     deleteMultiSitesPage.deleteMultiSite();
+    multiSitesPage.verifyMultiSitesDeleted();
   })
 
 
