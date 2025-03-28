@@ -3,7 +3,7 @@ export class MultiSitesPage {
     btnCreateMultiSites = () => cy.get('[routerlink="/multi-sites/create"]');
     siteNameOnList = () => cy.get('.toolText');
     btnGoBack = () => cy.get('[title="Back"]');
-    categoryContainer = () => cy.get('.category-container');
+    sltMultiSiteName = () => cy.get('[class="toolText"]')
 
     //searches for a MultiSite and checks if there is a response with the search prompt name
      searchMultiSites(multiSiteName) {
@@ -16,6 +16,15 @@ export class MultiSitesPage {
       this.siteNameOnList().eq(0).should('be.visible', { timeout: 20000 }).and('have.text', multiSiteName);
      }
 
+    //gets all MultiSites and selects the first one
+     selectMultiSite(multiSiteName) {
+        cy.intercept('POST', '/api/multiSites/get_multi_sites').as('allMultiSites');
+        this.txtSearch().clear().type(multiSiteName + '{enter}');
+        cy.wait('@allMultiSites').its('response.statusCode').should('eq', 200);
+        this.sltMultiSiteName().eq(1).click();    
+    }
+    
+    //verify no search result
      verifyMultiSitesDeleted() {
         this.categoryContainer().should('contain', 'No results');
     }
