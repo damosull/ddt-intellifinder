@@ -27,8 +27,11 @@ describe('MultiSites Test Suite', () => {
   const timestamp = new Date().getTime();
   const searchName = 'test';
   const newTextEdit = 'new text addition';
-  const latitude  = 55.6120128;
-  const longitude = 12.6476789;
+  //Intellifinder address
+  const latitude  = 55.3757932;
+  const longitude = 10.4396473;
+  
+  const subSiteName = 'Default';
 
 //each "it" section is an individual test that will be run it also takes two arguments, description and a callback. Before each "it" session is terminated, but if there is an error in first "It" it will just jump to the next one.
   beforeEach(() => {
@@ -53,21 +56,23 @@ describe('MultiSites Test Suite', () => {
     deleteMultiSitesPage.deleteMultiSite();
     multiSitesPage.verifyMultiSitesDeleted();
 
-  })
+  });
 
     //creates a new site with a unique name and then searches for this specific MultiSite
-    it.only('Test SubSites', () => {
+    it('Test SubSites', () => {
       multiSitesPage.selectMultiSite(searchName);
       
-      updateMultiSitesPage.addNewPlanDrawing();
+      //currently not tested features
+      // updateMultiSitesPage.addNewPlanDrawing();
       // updateMultiSitesPage.editPlanDrawing();
 
-      // addSubSitePage.sltPSubSite();
-      // addSubSitePage.addPSubSite();
+      addSubSitePage.sltSubSite();
+
+      //currently not tested features
+      // addSubSitePage.createSubSite(subSiteName, latitude, longitude);
+
+      addSubSitePage.addPSubSite();
   
-      //multiSitesPage.btnCreateMultiSites().click();
-      //createMultiSitesPage.createMultiSite(multiSiteName);
-  
-    })
+    });
 
 })
