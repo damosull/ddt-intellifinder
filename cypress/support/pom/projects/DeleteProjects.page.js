@@ -1,16 +1,8 @@
-export class ProjectsPage {
-    txtSearch = () => cy.get('[type="text"][placeholder="Search"]');
-   
-
+export class DeleteProjectsPage {
     btnTableCheckbox = () => cy.get('input[class="projectCB"][type="checkbox"]');
     
     btnSelectActions = () => cy.get('div>select');
     confirmationTitle = () => cy.get('.swal-title').contains('Are you sure?');
-
-    
-    // btnFilterSubject = () => cy.contains('Subject');
-    // btnFilterStartDate = () => cy.contains('Start date');
-    // btnFilterEndDate = () => cy.contains('End date');
 
     searchProjects(projectName) {
         this.txtSearch().should('be.visible');
@@ -30,8 +22,4 @@ export class ProjectsPage {
         cy.contains('Yes').click();
 
     }
-
-    // filterDate(){
-    //      this.btnFilterStartDate.click();
-    // }
 }

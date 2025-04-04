@@ -1,37 +1,25 @@
-export class ProjectsPage {
-    txtSearch = () => cy.get('[type="text"][placeholder="Search"]');
-   
-
+export class ArchiveProjectsPage {
     btnTableCheckbox = () => cy.get('input[class="projectCB"][type="checkbox"]');
     
     btnSelectActions = () => cy.get('div>select');
     confirmationTitle = () => cy.get('.swal-title').contains('Are you sure?');
 
-    
-    // btnFilterSubject = () => cy.contains('Subject');
-    // btnFilterStartDate = () => cy.contains('Start date');
-    // btnFilterEndDate = () => cy.contains('End date');
-
-    searchProjects(projectName) {
+    searchArchivedProjects(projectName) {
         this.txtSearch().should('be.visible');
         this.txtSearch().type(projectName + '{enter}');
         cy.wait(2000);
     }
 
-    selectProjectCheckbox(){
+    selectArchivedProject(){
         this.btnTableCheckbox().check();
     }
 
-    archiveProjects(){
-        this.btnSelectActions().select(1).should('have.value', 'archive');
+    deleteProjects(){
+        this.btnSelectActions().select(2).should('have.value', 'trash');
   
         cy.wait(2000);
         this.confirmationTitle().should('be.visible');
         cy.contains('Yes').click();
 
     }
-
-    // filterDate(){
-    //      this.btnFilterStartDate.click();
-    // }
 }
