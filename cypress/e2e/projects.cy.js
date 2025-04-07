@@ -46,10 +46,16 @@ describe('Projects Test Suite', () => {
 
 });
 
-// it.only('Delete Project via Archived Projects List page', () => {
-//    sideMenuPage.openProjectsArchivePage();
-//    archiveProjectsPage.searchArchivedProjects(searchName);
+it.only('Delete Project via Archived Projects List page', () => {
+   sideMenuPage.openProjectsArchivePage();
+   archiveProjectsPage.searchArchivedProjects(searchName);
+   archiveProjectsPage.selectArchivedProject();
+   archiveProjectsPage.trashProjects();
+   archiveProjectsPage.searchArchivedProjects(searchName);
+   archiveProjectsPage.selectArchivedProject();
+   archiveProjectsPage.restoreProject();
 
-// });
+
+});
 
 })
