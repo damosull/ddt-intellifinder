@@ -42,12 +42,14 @@ describe('Projects Test Suite', () => {
     //use archive action on a selected project
     projectsPage.archiveProjects();
 
-});
-
-it('Delete Project via Archived Projects List page', () => {
-   sideMenuPage.openProjectsArchivePage();
-   archiveProjectsPage.searchArchivedProjects(searchName);
+    projectsPage.searchProjectsClear();
 
 });
+
+// it.only('Delete Project via Archived Projects List page', () => {
+//    sideMenuPage.openProjectsArchivePage();
+//    archiveProjectsPage.searchArchivedProjects(searchName);
+
+// });
 
 })

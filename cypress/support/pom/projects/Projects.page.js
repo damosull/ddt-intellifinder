@@ -6,6 +6,7 @@ export class ProjectsPage {
     
     btnSelectActions = () => cy.get('div>select');
     confirmationTitle = () => cy.get('.swal-title').contains('Are you sure?');
+    btnClearSearch = () => cy.get('[class="btn btn-primary"][type="button"]')
 
     
     // btnFilterSubject = () => cy.contains('Subject');
@@ -30,6 +31,11 @@ export class ProjectsPage {
         cy.contains('Yes').click();
 
     }
+
+    searchProjectsClear() {
+        this.btnClearSearch().click();
+    }
+
 
     // filterDate(){
     //      this.btnFilterStartDate.click();
