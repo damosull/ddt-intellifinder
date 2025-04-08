@@ -30,10 +30,9 @@ export class ArchiveProjectsPage {
         cy.contains('Yes').click();
 
         cy.intercept('PUT', '/api/Projects/save_projects').as('saveRequest');
-        cy.wait('@saveRequest').its('response.statusCode').should('eq', 200);
-
-        
         cy.intercept('POST', '/api/Projects/projects_with_type').as('allProjects');
+
+        cy.wait('@saveRequest').its('response.statusCode').should('eq', 200);
         cy.wait('@allProjects').its('response.statusCode').should('eq', 200);
     }
 
@@ -45,9 +44,9 @@ export class ArchiveProjectsPage {
         cy.contains('Yes').click();
 
         cy.intercept('PUT', '/api/Projects/save_projects').as('saveRequest');
-        cy.wait('@saveRequest').its('response.statusCode').should('eq', 200);
-
         cy.intercept('POST', '/api/Projects/projects_with_type').as('allProjects');
+
+        cy.wait('@saveRequest').its('response.statusCode').should('eq', 200);
         cy.wait('@allProjects').its('response.statusCode').should('eq', 200);
         
     }
