@@ -5,6 +5,7 @@ import { SideMenuPage } from "../support/pom/SideMenu.page";
 import { ProjectsPage } from "../support/pom/projects/Projects.page.js";
 import { CreateProjectsPage } from "../support/pom/projects/CreateProjects.page.js";
 import { ArchiveProjectsPage } from "../support/pom/projects/ArchiveProjects.page.js";
+import { TrashProjectsPage } from "../support/pom/projects/TrashProjects.page.js";
 
 describe('Projects Test Suite', () => {
 
@@ -13,6 +14,7 @@ describe('Projects Test Suite', () => {
   const projectsPage = new ProjectsPage();
   const createProjectsPage = new CreateProjectsPage();
   const archiveProjectsPage = new ArchiveProjectsPage();
+  const trashedProjectsPage = new TrashProjectsPage();
 
   const timeStamp = new Date().getTime();
   const testText = 'test';
@@ -24,38 +26,56 @@ describe('Projects Test Suite', () => {
     
   });
 
-  it('Create, Search Project and Archive via Projects List page', () => {
+  it.only('Create, Search Project and Archive via Projects List page', () => {
     sideMenuPage.openProjectsPage();
     const projectName = `Created Name - ${timeStamp}`;
 
     //create project
     createProjectsPage.createNewProject(projectName,timeStamp,testText);
 
-    //search test
+    //search test, select checkbox and use archive action on a selected project then clear search
     projectsPage.searchProjects(projectName);
-
-    //select checkbox
     projectsPage.selectProjectCheckbox();
-
-    //projectsPage.btnFilterDate().click();
-
-    //use archive action on a selected project
     projectsPage.archiveProjects();
-
     projectsPage.searchProjectsClear();
 
+    //do date filtering
+    //projectsPage.btnFilterDate().click();
+
 });
 
-it.only('Delete Project via Archived Projects List page', () => {
+it('Trash and Restore Project via Archived Projects page', () => {
    sideMenuPage.openProjectsArchivePage();
+
+   //trash project 
    archiveProjectsPage.searchArchivedProjects(searchName);
-   archiveProjectsPage.selectArchivedProject();
+   archiveProjectsPage.selectSeveralArchivedProject();
    archiveProjectsPage.trashProjects();
-   archiveProjectsPage.searchArchivedProjects(searchName);
+   projectsPage.searchProjectsClear();
+
+   //restore project
    archiveProjectsPage.selectArchivedProject();
    archiveProjectsPage.restoreProject();
-
-
+   projectsPage.searchProjectsClear();
 });
+
+// it('Archive and Restore Project via Trashed Projects page', () => {
+//   sideMenuPage.openProjectsTrashPage();
+
+//   //restore project
+//   trashedProjectsPage.searchTrashedProjects(searchName);
+//   trashedProjectsPage.selectTrashedProject();
+//   trashedProjectsPage.restoreProject();
+
+//   //archive project
+//   trashedProjectsPage.selectTrashedProject();
+//   trashedProjectsPage.archiveProjects();
+
+//   //delete project
+//   trashedProjectsPage.selectTrashedProject();
+//   trashedProjectsPage.deleteProject();
+//   projectsPage.searchProjectsClear();
+
+// });
 
 })
