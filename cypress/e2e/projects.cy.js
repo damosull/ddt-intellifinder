@@ -5,7 +5,6 @@ import { SideMenuPage } from "../support/pom/SideMenu.page";
 import { ProjectsPage } from "../support/pom/projects/Projects.page.js";
 import { CreateProjectsPage } from "../support/pom/projects/CreateProjects.page.js";
 import { ArchiveProjectsPage } from "../support/pom/projects/ArchiveProjects.page.js";
-import { TrashProjectsPage } from "../support/pom/projects/TrashProjects.page.js";
 
 describe('Projects Test Suite', () => {
 
@@ -14,7 +13,7 @@ describe('Projects Test Suite', () => {
   const projectsPage = new ProjectsPage();
   const createProjectsPage = new CreateProjectsPage();
   const archiveProjectsPage = new ArchiveProjectsPage();
-  const trashedProjectsPage = new TrashProjectsPage();
+
 
   const timeStamp = new Date().getTime();
   const testText = 'test';
@@ -26,7 +25,7 @@ describe('Projects Test Suite', () => {
     
   });
 
-  it.only('Create, Search Project and Archive via Projects List page', () => {
+  it('Create, Search Project and Archive via Projects List page', () => {
     sideMenuPage.openProjectsPage();
     const projectName = `Created Name - ${timeStamp}`;
 
@@ -58,24 +57,5 @@ it('Trash and Restore Project via Archived Projects page', () => {
    archiveProjectsPage.restoreProject();
    projectsPage.searchProjectsClear();
 });
-
-// it('Archive and Restore Project via Trashed Projects page', () => {
-//   sideMenuPage.openProjectsTrashPage();
-
-//   //restore project
-//   trashedProjectsPage.searchTrashedProjects(searchName);
-//   trashedProjectsPage.selectTrashedProject();
-//   trashedProjectsPage.restoreProject();
-
-//   //archive project
-//   trashedProjectsPage.selectTrashedProject();
-//   trashedProjectsPage.archiveProjects();
-
-//   //delete project
-//   trashedProjectsPage.selectTrashedProject();
-//   trashedProjectsPage.deleteProject();
-//   projectsPage.searchProjectsClear();
-
-// });
 
 })
