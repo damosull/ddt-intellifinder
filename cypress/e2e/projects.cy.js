@@ -35,9 +35,15 @@ describe('Projects Test Suite', () => {
     //check load data
     projectsPage.loadALlProjects();
 
-    //initiate 'Start Date' sorting and test it
+    //initiate 'Start Date' sorting check that it is acceding order
     sortProjectsPage.sorTableStartDate();
     sortProjectsPage.sortedAscIcon();
+    sortProjectsPage.sortedDateDataAcceding();
+    
+    //initiate 'Start Date' sorting check that it is acceding order
+    sortProjectsPage.sorTableStartDate();
+    sortProjectsPage.sortedDescIcon();
+    sortProjectsPage.sortedDateDataDescending();
 
     // //create project
     // createProjectsPage.createNewProject(projectName,timeStamp,testText);

@@ -27,10 +27,10 @@ export class ArchiveProjectsPage {
         this.btnSelectActions().select(1).should('have.value', 'unarchive');
 
         this.confirmationTitle().should('be.visible');
-        cy.contains('Yes').click();
 
         cy.intercept('PUT', '/api/Projects/save_projects').as('saveRequest');
         cy.intercept('POST', '/api/Projects/projects_with_type').as('allProjects');
+        cy.contains('Yes').click();
 
         cy.wait('@saveRequest').its('response.statusCode').should('eq', 200);
         cy.wait('@allProjects').its('response.statusCode').should('eq', 200);
@@ -41,10 +41,10 @@ export class ArchiveProjectsPage {
         this.btnSelectActions().select(2).should('have.value', 'trash');
         
         this.confirmationTitle().should('be.visible');
-        cy.contains('Yes').click();
 
         cy.intercept('PUT', '/api/Projects/save_projects').as('saveRequest');
         cy.intercept('POST', '/api/Projects/projects_with_type').as('allProjects');
+        cy.contains('Yes').click();
 
         cy.wait('@saveRequest').its('response.statusCode').should('eq', 200);
         cy.wait('@allProjects').its('response.statusCode').should('eq', 200);

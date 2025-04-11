@@ -1,7 +1,6 @@
 export class ProjectsPage {
     txtSearch = () => cy.get('[type="text"][placeholder="Search"]');
 
-
     btnTableCheckbox = () => cy.get('input[class="projectCB"][type="checkbox"]');
     
     btnSelectActions = () => cy.get('div>select');
@@ -16,6 +15,7 @@ export class ProjectsPage {
 
     loadALlProjects(){
         cy.intercept('POST', '/api/Projects/projects_with_type').as('allProjects');
+        cy.wait(1000);
         cy.wait('@allProjects').its('response.statusCode').should('eq', 200);
     }
 
@@ -24,9 +24,7 @@ export class ProjectsPage {
     }
 
     archiveProjects(){
-        
         this.btnSelectActions().select(1).should('have.value', 'archive');
-  
         cy.wait(2000);
         
         this.confirmationTitle().should('be.visible');
@@ -42,6 +40,5 @@ export class ProjectsPage {
     searchProjectsClear() {
         this.btnClearSearch().click();
     }
-
 
 }
