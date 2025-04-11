@@ -60,7 +60,7 @@ describe('Sites Test Suite', () => {
         sitesMapPage.pageTitle().should('be.visible');
     });
 
-    it.only('Search Sites via Sites > Nearest - verify distances are in ascending order', () => {
+    it('Search Sites via Sites > Nearest - verify distances are in ascending order', () => {
         sitesNearestPage.openAndVerifyDistancesInAscendingOrder()
     });
 });
