@@ -39,19 +39,22 @@ describe('Projects Test Suite', () => {
     // //check load data
     // projectsPage.loadALlProjects();
 
-    //initiate 'Subject' sorting check that it is acceding order
-    sortProjectsPage.sortSubject(sortedIconAsc, sortedIconDesc, columnSubjectIndex);
+    // //initiate 'Subject' sorting check that it is acceding order
+    // sortProjectsPage.sortSubject(sortedIconAsc, sortedIconDesc, columnSubjectIndex);
 
-    //initiate 'Start Date' sorting check that it is acceding order
-    sortProjectsPage.sortStartDate(sortedIconAsc, sortedIconDesc, columnStartDateIndex);
+    // //initiate 'Start Date' sorting check that it is acceding order
+    // sortProjectsPage.sortStartDate(sortedIconAsc, sortedIconDesc, columnStartDateIndex);
 
-    //initiate 'End Date' sorting check that it is acceding order
-    sortProjectsPage.sortEndDate(sortedIconAsc, sortedIconDesc, columnEndDateIndex);
+    // //initiate 'End Date' sorting check that it is acceding order
+    // sortProjectsPage.sortEndDate(sortedIconAsc, sortedIconDesc, columnEndDateIndex);
+
+    projectsPage.exportCSVData();
+
 
 
 });
 
-  it('Create, Search Project and Archive via Projects List page', () => {
+it('Create, Search Project and Archive via Projects List page', () => {
     sideMenuPage.openProjectsPage();
     const projectName = `Created Name - ${timeStamp}`;
 

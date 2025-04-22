@@ -8,6 +8,10 @@ export class ProjectsPage {
     btnClearSearch = () => cy.get('[class="btn btn-primary"][type="button"]')
 
     brnExportCSV = () => cy.get('[title="Export task data"]');
+    exportWindow = () => cy.get('[id="exportTasksDataModal"]');
+
+    selectExportSubjects = () => cy.get('[class="selection"]');
+    btnSave = () => cy.get('[title="Save"]');
 
     searchProjects(projectName) {
         this.txtSearch().should('be.visible');
@@ -40,11 +44,18 @@ export class ProjectsPage {
     }
 
     exportCSVData(){
-        this.brnExportCSV().check();
+        this.brnExportCSV().eq(1).click();    
+       
+        this.exportWindow().should('be.visible');
+        // cy.intercept('GET', '/api/Projects/fields_list').as('exportFields');
+        // cy.wait('@exportFields').its('response.statusCode').should('eq', 200);
+        //  this.selectExportSubjects().click().contains(' Start date ').click({ force: true });
+
+        // cy.wait(500);
+        // this.btnSave.click({ force: true });
     }
 
     searchProjectsClear() {
         this.btnClearSearch().click();
     }
-
 }
