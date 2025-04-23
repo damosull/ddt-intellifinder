@@ -59,7 +59,7 @@ describe('MultiSites Test Suite', () => {
   });
 
     //creates a new site with a unique name and then searches for this specific MultiSite
-  it.only('Test SubSites', () => {
+  it('Test SubSites', () => {
       multiSitesPage.selectMultiSite(searchName);
       
       //currently not tested features
@@ -67,8 +67,8 @@ describe('MultiSites Test Suite', () => {
       updateMultiSitesPage.editPlanDrawing();
       updateMultiSitesPage.deletePlanDrawing();
 
-      // addSubSitePage.sltSubSite();
-      // addSubSitePage.addPSubSite();
+      addSubSitePage.sltSubSite();
+      addSubSitePage.addPSubSite();
   
   });
 

@@ -33,7 +33,7 @@ describe('Projects Test Suite', () => {
     
   });
 
-it.only('Sort all columns, export csv and check pagination Projects List page', () => {
+it('Sort all columns, export csv and check pagination Projects List page', () => {
     sideMenuPage.openProjectsPage();
 
     //check load data
@@ -47,7 +47,6 @@ it.only('Sort all columns, export csv and check pagination Projects List page', 
 
     //initiate 'End Date' sorting check that it is acceding order
     sortProjectsPage.sortEndDate(sortedIconAsc, sortedIconDesc, columnEndDateIndex);
-
 
     projectsPage.exportCSVData();
 

@@ -74,8 +74,6 @@ export class UpdateMultiSitesPage {
     cy.intercept('POST', '/api/multiSites/delete_plan_drawing').as('deletePlanDrawing');
     cy.contains('Yes').click();
     cy.wait('@deletePlanDrawing').its('response.statusCode').should('eq', 200);
-    
-
   }
 
 }
