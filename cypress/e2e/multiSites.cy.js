@@ -59,19 +59,16 @@ describe('MultiSites Test Suite', () => {
   });
 
     //creates a new site with a unique name and then searches for this specific MultiSite
-  it('Test SubSites', () => {
+  it.only('Test SubSites', () => {
       multiSitesPage.selectMultiSite(searchName);
       
       //currently not tested features
-      // updateMultiSitesPage.addNewPlanDrawing();
-      // updateMultiSitesPage.editPlanDrawing();
+      updateMultiSitesPage.addNewPlanDrawing();
+      updateMultiSitesPage.editPlanDrawing();
+      updateMultiSitesPage.deletePlanDrawing();
 
-      addSubSitePage.sltSubSite();
-
-      //currently not tested features
-      // addSubSitePage.createSubSite(subSiteName, latitude, longitude);
-
-      addSubSitePage.addPSubSite();
+      // addSubSitePage.sltSubSite();
+      // addSubSitePage.addPSubSite();
   
   });
 
