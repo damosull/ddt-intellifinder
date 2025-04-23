@@ -48,7 +48,6 @@ it('Sort all columns, export csv and check pagination Projects List page', () =>
     //initiate 'End Date' sorting check that it is acceding order
     sortProjectsPage.sortEndDate(sortedIconAsc, sortedIconDesc, columnEndDateIndex);
 
-    // projectsPage.paginationChange();
 
     projectsPage.exportCSVData();
 
@@ -78,11 +77,10 @@ it('Trash and Restore Project via Archived Projects page', () => {
    archiveProjectsPage.searchArchivedProjects(searchName);
    archiveProjectsPage.selectSeveralArchivedProject();
    archiveProjectsPage.trashProjects();
-   projectsPage.searchProjectsClear();
 
    //restore project
    archiveProjectsPage.selectArchivedProject();
-   archiveProjectsPage.restoreProject();
+   trashedProjectsPage.restoreProject();
    projectsPage.searchProjectsClear();
 });
 

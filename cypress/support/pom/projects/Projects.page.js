@@ -67,15 +67,6 @@ export class ProjectsPage {
         this.btnCancel().click();
     }
 
-    // paginationChange(){
-    //     //default pagination is 50, therefore 100 should be lower. But default here can change.
-    //       const defaultPagination = this.paginationLabel().find('span').text().trim();
-    //       this.sltPaginationOptions().click().select(2).should('have.value', '100');
-    //       const newPagination = this.paginationLabel().find('span').text().trim();
-      
-    //       expect(newPagination).to.be.below(defaultPagination);
-    // }
-
     searchProjectsClear() {
         this.btnClearSearch().click();
     }
