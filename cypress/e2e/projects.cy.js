@@ -33,20 +33,22 @@ describe('Projects Test Suite', () => {
     
   });
 
-  it('Sort all columns, export csv and check pagination Projects List page', () => {
+it('Sort all columns, export csv and check pagination Projects List page', () => {
     sideMenuPage.openProjectsPage();
 
-    // //check load data
+    //check load data
     // projectsPage.loadALlProjects();
 
-    // //initiate 'Subject' sorting check that it is acceding order
-    // sortProjectsPage.sortSubject(sortedIconAsc, sortedIconDesc, columnSubjectIndex);
+    //initiate 'Subject' sorting check that it is acceding order
+    sortProjectsPage.sortSubject(sortedIconAsc, sortedIconDesc, columnSubjectIndex);
 
-    // //initiate 'Start Date' sorting check that it is acceding order
-    // sortProjectsPage.sortStartDate(sortedIconAsc, sortedIconDesc, columnStartDateIndex);
+    //initiate 'Start Date' sorting check that it is acceding order
+    sortProjectsPage.sortStartDate(sortedIconAsc, sortedIconDesc, columnStartDateIndex);
 
-    // //initiate 'End Date' sorting check that it is acceding order
-    // sortProjectsPage.sortEndDate(sortedIconAsc, sortedIconDesc, columnEndDateIndex);
+    //initiate 'End Date' sorting check that it is acceding order
+    sortProjectsPage.sortEndDate(sortedIconAsc, sortedIconDesc, columnEndDateIndex);
+
+    // projectsPage.paginationChange();
 
     projectsPage.exportCSVData();
 

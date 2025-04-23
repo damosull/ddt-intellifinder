@@ -6,14 +6,7 @@ export class AddSubSitePage {
 
     //create new site when adding a Sub Site
     sltSubSiteDropDown = () => cy.get('#select2-availableSites-container');
-    // btnAddSubSiteOPtion = () => cy.get('[class="btn btn-warning btn-xs"]');
-    // txtSubSiteName = () => cy.get('[title="Site name"]');
-    // txtLatitude = () => cy.get('[type="number"]').eq(0);
-    // txtLongitude = () => cy.get('[type="number"]').eq(1);
-    // selectCategory = () => cy.get('#select2-categoryDropdown-container');
-    // sitePicture = () => cy.get('#sitePic');
-    // btnSave = () => cy.get('[title="Save"]');
-    
+
     //add Sub Site to an image
     sltDropDownResult = () => cy.get('.select2-results__options');
     btnSaveSubSite = () => cy.get('.btn.btn-success.customBtn');
@@ -29,29 +22,6 @@ export class AddSubSitePage {
         this.sltPlanDrawingImg().click();
         cy.wait('@getSubSiteDropdown').its('response.statusCode').should('eq', 200);
     }
-
-    //currently not tested feature
-    // createSubSite(subSiteName, latitude, longitude) { 
-    //     // open the select dropdown
-    //      this.sltSubSiteDropDown().click();
-
-    //      this.btnAddSubSiteOPtion().click();
-    //      this.txtSubSiteName().clear().type(subSiteName);
-    //      this.txtLatitude().clear().type(latitude);
-    //      this.txtLongitude().clear().type(longitude);
-    //      this.selectCategory().click();
-    //      cy.intercept('POST', '/api/categories/all_categories').as('postRequest');
-    //      this.txtCategorySearch().type('Default');
-    //      cy.wait('@postRequest').its('response.statusCode').should('eq', 200);
-    //      this.txtCategorySearchOptions().eq(0).click();
-    //      this.sitePicture().attachFile('testImage.jpg');
-
-    //      cy.intercept('POST', '/api/site/new_site').as('saveRequest');
-    //      cy.intercept('POST', '/api/site/sites').as('allSitesRequest');
-    //      this.btnSave().click()
-    //      cy.wait('@saveRequest').its('response.statusCode').should('eq', 200);
-    //      cy.wait('@allSitesRequest').its('response.statusCode').should('eq', 200);
-    //     }
 
     addPSubSite(){
         // open the select dropdown

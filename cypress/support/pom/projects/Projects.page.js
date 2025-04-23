@@ -11,7 +11,13 @@ export class ProjectsPage {
     exportWindow = () => cy.get('[id="exportTasksDataModal"]');
 
     selectExportSubjects = () => cy.get('[class="selection"]');
+    selectExportOption = () => cy.get('.select2-results__options');
+    
     btnSave = () => cy.get('[title="Save"]');
+    btnCancel = () => cy.get('[title="Cancel"]');
+
+    paginationLabel = () => cy.get('.label label-default');
+    sltPaginationOptions = () => cy.get('[data-dashlane-rid="aea5cb3f64cb7861"]');
 
     searchProjects(projectName) {
         this.txtSearch().should('be.visible');
@@ -44,16 +50,31 @@ export class ProjectsPage {
     }
 
     exportCSVData(){
+        cy.wait(500);
         this.brnExportCSV().eq(1).click();    
        
         this.exportWindow().should('be.visible');
+        //figure out how to add a token to api call.
         // cy.intercept('GET', '/api/Projects/fields_list').as('exportFields');
         // cy.wait('@exportFields').its('response.statusCode').should('eq', 200);
-        //  this.selectExportSubjects().click().contains(' Start date ').click({ force: true });
 
-        // cy.wait(500);
-        // this.btnSave.click({ force: true });
+        this.selectExportSubjects().click();
+
+        this.selectExportOption().contains(' Start date ').click({ force: true });
+        cy.wait(500);
+        this.btnSave().click();
+        cy.wait(500);
+        this.btnCancel().click();
     }
+
+    // paginationChange(){
+    //     //default pagination is 50, therefore 100 should be lower. But default here can change.
+    //       const defaultPagination = this.paginationLabel().find('span').text().trim();
+    //       this.sltPaginationOptions().click().select(2).should('have.value', '100');
+    //       const newPagination = this.paginationLabel().find('span').text().trim();
+      
+    //       expect(newPagination).to.be.below(defaultPagination);
+    // }
 
     searchProjectsClear() {
         this.btnClearSearch().click();
