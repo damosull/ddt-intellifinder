@@ -59,35 +59,37 @@ export class SortProjectsPage {
     }
 
     sortedDateDataAscending(column) {
-
-        this.sltDataTable().find('tbody').then((rows) => {
-          const dates = [];
-      
-          Cypress.$(rows).each((row) => {
+      const dates = [];
+        this.sltDataTable().find('tbody > tr:visible').then((rows) => {
+          Cypress.$(rows).each((index, row) => {
             const cellText = Cypress.$(row).find('td').eq(column).text().trim();
             //expect(cellText).to.increase(row, 'val');
             const date = new Date(cellText);
             if (!isNaN(date)) { dates.push(date);}
             });
+            console.log(dates);
         
             // expect(dates).to.be.strictly.increasing;
           const sorted = [...dates].sort((a, b) => a - b);
+          console.log(sorted);
           expect(dates).to.deep.equal(sorted);
         });
 
       }
    
     sortedDateDataDescending(column){
-        this.sltDataTable().find('tbody').then((rows) => {
-            const dates = [];
+      const dates = [];
+        this.sltDataTable().find('tbody > tr:visible').then((rows) => {
            
-            Cypress.$(rows).each((row) => {
+            Cypress.$(rows).each((index, row) => {
               const cellText = Cypress.$(row).find('td').eq(column).text().trim();
               const date = new Date(cellText);
               if (!isNaN(date)) { dates.push(date);}
             });
+            console.log(dates);
         
-            const sorted = [...dates].sort((b, a) => b - a);
+            const sorted = [...dates].sort((a, b) => b - a);
+            console.log(sorted);
             expect(dates).to.deep.equal(sorted);
           });
     }

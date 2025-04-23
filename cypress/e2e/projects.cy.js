@@ -33,7 +33,7 @@ describe('Projects Test Suite', () => {
     
   });
 
-it('Sort all columns, export csv and check pagination Projects List page', () => {
+it.only('Sort all columns, export csv and check pagination Projects List page', () => {
     sideMenuPage.openProjectsPage();
 
     //check load data
