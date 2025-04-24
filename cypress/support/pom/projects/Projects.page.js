@@ -40,11 +40,13 @@ export class ProjectsPage {
         cy.wait(2000);
         
         this.confirmationTitle().should('be.visible');
-        cy.contains('Yes').click();
+        
 
         cy.intercept('PUT', '/api/Projects/save_projects').as('saveRequest');
         cy.intercept('POST', '/api/Projects/projects_with_type').as('allProjects');
-
+        cy.contains('Yes').click();
+        cy.wait(100);
+        
         cy.wait('@saveRequest').its('response.statusCode').should('eq', 200);
         cy.wait('@allProjects').its('response.statusCode').should('eq', 200);
     }
