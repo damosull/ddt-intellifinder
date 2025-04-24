@@ -5,12 +5,6 @@ export class ArchiveProjectsPage {
     btnSelectActions = () => cy.get('div>select');
     confirmationTitle = () => cy.get('.swal-title').contains('Are you sure?');
 
-    searchArchivedProjects(projectName) {
-        cy.wait(2000);
-        this.txtSearch().should('be.visible');
-        this.txtSearch().clear().type(projectName + '{enter}');
-    }
-
     selectArchivedProject(){
         cy.wait(2000);
         this.btnTableCheckbox().eq(0).check();

@@ -7,16 +7,21 @@ import { CreateProjectsPage } from "../support/pom/projects/CreateProjects.page.
 import { ArchiveProjectsPage } from "../support/pom/projects/ArchiveProjects.page.js";
 import { TrashProjectsPage } from "../support/pom/projects/TrashProjects.page.js";
 import { SortProjectsPage } from "../support/pom/projects/SortProjects.page.js";
+import { ProjectDetailsPage } from "../support/pom/projects/ProjectDetails.page.js"
 
 describe('Projects Test Suite', () => {
 
   const loginPage = new LoginPage();
   const sideMenuPage = new SideMenuPage();
+
   const projectsPage = new ProjectsPage();
   const sortProjectsPage = new SortProjectsPage();
   const createProjectsPage = new CreateProjectsPage();
   const archiveProjectsPage = new ArchiveProjectsPage();
   const trashedProjectsPage = new TrashProjectsPage();
+
+  const projectDetailsPage = new ProjectDetailsPage();
+
 
   const timeStamp = new Date().getTime();
   const testText = 'test';
@@ -50,8 +55,6 @@ it('Sort all columns, export csv and check pagination Projects List page', () =>
     //initiate 'End Date' sorting check that it is acceding order
     sortProjectsPage.sortEndDate(sortedIconAsc, sortedIconDesc, columnEndDateIndex);
 
-   
-
 });
 
 it('Create, Search Project and Archive via Projects List page', () => {
@@ -74,7 +77,7 @@ it('Trash and Restore Project via Archived Projects page', () => {
    sideMenuPage.openProjectsArchivePage();
 
    //trash project 
-   archiveProjectsPage.searchArchivedProjects(searchName);
+   projectsPage.searchProjects(searchName);
    archiveProjectsPage.selectSeveralArchivedProject();
    archiveProjectsPage.trashProjects();
 
@@ -82,6 +85,7 @@ it('Trash and Restore Project via Archived Projects page', () => {
    archiveProjectsPage.selectArchivedProject();
    trashedProjectsPage.restoreProject();
    projectsPage.searchProjectsClear();
+
 });
 
 //trashed projects page    
@@ -89,7 +93,7 @@ it('Archive and Restore Project via Trashed Projects page', () => {
   sideMenuPage.openProjectsTrashPage();
 
   //restore project
-  trashedProjectsPage.searchTrashedProjects(searchName);
+  projectsPage.searchProjects(searchName);
   trashedProjectsPage.selectTrashedProject();
   trashedProjectsPage.restoreProject();
 
@@ -101,6 +105,15 @@ it('Archive and Restore Project via Trashed Projects page', () => {
   trashedProjectsPage.selectTrashedProject();
   trashedProjectsPage.deleteProject();
   projectsPage.searchProjectsClear();
+
+});
+
+//Project Details page    
+it.only('Project Details via Task Page', () => {
+  sideMenuPage.openProjectsPage();
+
+  projectsPage.searchProjects(searchName);
+  projectDetailsPage.selectProject();  //go to project Details page -- Task List page
 
 });
 

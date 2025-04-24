@@ -20,6 +20,7 @@ export class ProjectsPage {
     sltPaginationOptions = () => cy.get('[data-dashlane-rid="aea5cb3f64cb7861"]');
 
     searchProjects(projectName) {
+        cy.wait(2000);
         this.txtSearch().should('be.visible');
         this.txtSearch().type(projectName + '{enter}');
         cy.wait(2000);

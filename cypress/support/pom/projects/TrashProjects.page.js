@@ -6,12 +6,6 @@ export class TrashProjectsPage {
     confirmationTitle = () => cy.get('.swal-title').contains('Are you sure?');
     extraConfirmationTitle = () => cy.get('.swal-title').contains('Do you want to delete relevant tasks?');
    
-    searchTrashedProjects(projectName) {
-        this.txtSearch().should('be.visible');
-        this.txtSearch().clear().type(projectName + '{enter}');
-        cy.wait(2000);
-    }
-
     selectTrashedProject(){
         cy.wait(2000);
         this.btnTableCheckbox().eq(0).check();
