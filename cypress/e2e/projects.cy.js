@@ -115,13 +115,17 @@ it.only('Project Details via Task Page', () => {
   projectsPage.searchProjects(searchName);
  
   //save the name of the project with index 0 before selecting it, so we can do verifications
-  const selectedProject = projectDetailsPage.selectedProjectName();
-  console.log(selectedProject);
+  projectDetailsPage.sltProject().eq(0).invoke('text').then((selectedProject) => {
+    //cy.log('Selected Project:', selectedProject);
 
-  //go to project Details page -- So it in another place -> Task List page 
-  projectDetailsPage.selectProject();
-  projectDetailsPage.pageTitle(selectedProject);
+     //go to project Details page -- So it in another place -> Task List page 
+    // Now proceed to select and validate
+    projectDetailsPage.selectProject();
+    projectDetailsPage.pageTitle(selectedProject.trim());
+    projectDetailsPage.openInformationPopUp(selectedProject.trim());
 
+    projectDetailsPage.addNewTaskToProject();
+  });
 });
 
 })
