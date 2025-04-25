@@ -25,7 +25,7 @@ describe('Projects Test Suite', () => {
 
   const timeStamp = new Date().getTime();
   const testText = 'test';
-  const searchName = 'Created Name';
+  const searchName = 'Cypress Created Name';
   const sortedIconAsc = '[class="fooicon fooicon-sort-asc"]';
   const sortedIconDesc = '[class="fooicon fooicon-sort-desc"]';
   const columnSubjectIndex = 0;
@@ -59,7 +59,7 @@ it('Sort all columns, export csv and check pagination Projects List page', () =>
 
 it('Create, Search Project and Archive via Projects List page', () => {
     sideMenuPage.openProjectsPage();
-    const projectName = `Created Name - ${timeStamp}`;
+    const projectName = `Cypress Created Name - ${timeStamp}`;
 
     //create project
     createProjectsPage.createNewProject(projectName,timeStamp,testText);
@@ -113,7 +113,14 @@ it.only('Project Details via Task Page', () => {
   sideMenuPage.openProjectsPage();
 
   projectsPage.searchProjects(searchName);
-  projectDetailsPage.selectProject();  //go to project Details page -- Task List page
+ 
+  //save the name of the project with index 0 before selecting it, so we can do verifications
+  const selectedProject = projectDetailsPage.selectedProjectName();
+  console.log(selectedProject);
+
+  //go to project Details page -- So it in another place -> Task List page 
+  projectDetailsPage.selectProject();
+  projectDetailsPage.pageTitle(selectedProject);
 
 });
 
