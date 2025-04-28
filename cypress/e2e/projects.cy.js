@@ -31,6 +31,7 @@ describe('Projects Test Suite', () => {
   const columnSubjectIndex = 0;
   const columnStartDateIndex = 1;
   const columnEndDateIndex = 2;
+  const taskName = 'Cypress Created Task';
 
   beforeEach(() => {
     cy.visit('/');
@@ -124,7 +125,12 @@ it.only('Project Details via Task Page', () => {
     projectDetailsPage.pageTitle(selectedProject.trim());
     projectDetailsPage.openInformationPopUp(selectedProject.trim());
 
-    projectDetailsPage.addNewTaskToProject();
+    projectDetailsPage.addNewTaskToProjectEssentials(taskName,timeStamp);
+    //projectDetailsPage.addNewTaskToProjectNoForms(taskName,timeStamp);
+    //projectDetailsPage.addNewTaskToProjectWithForm(taskName,timeStamp);
+    //projectDetailsPage.addNewTaskToProjectPeriodic(taskName,timeStamp);
+
+
   });
 });
 
