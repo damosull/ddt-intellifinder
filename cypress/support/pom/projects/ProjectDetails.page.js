@@ -17,6 +17,9 @@ export class ProjectDetailsPage {
     txtPopUpNewTask = () => cy.get('h1');
     sltSite = () => cy.get('#mat-select-0');
     sltSiteOption = () => cy.get('[id="searchField"]');
+    sltSiteOptionDropDown = () => cy.get('#mat-option-11');
+
+    
     txtSubjectName = () => cy.get('#mat-input-4');
     txtDescription = () => cy.get('.note-editable');
     sltDebitorInput = () => cy.get('#mat-select-2');
@@ -67,7 +70,7 @@ export class ProjectDetailsPage {
         cy.wait(100);
         this.sltSiteOption().type('Default'+ '{enter}');
         cy.wait(100);
-        this.sltSiteOption().eq(0).click();
+        this.sltSiteOptionDropDown().eq(0).click();
 
         this.btnSaveTask().click();
 

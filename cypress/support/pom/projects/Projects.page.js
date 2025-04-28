@@ -57,7 +57,7 @@ export class ProjectsPage {
         this.brnExportCSV().eq(1).click();    
        
         this.exportWindow().should('be.visible');
-        //figure out how to add a token to api call.
+        //figure out how to add a login token to api call.
         // cy.intercept('GET', '/api/Projects/fields_list').as('exportFields');
         // cy.wait('@exportFields').its('response.statusCode').should('eq', 200);
 
