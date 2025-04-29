@@ -18,13 +18,17 @@ export class ProjectDetailsPage {
     sltSite = () => cy.get('#mat-select-0');
     sltSiteOption = () => cy.get('[id="searchField"]');
     sltSiteOptionDropDown = () => cy.get('#mat-option-11');
-
-    
+    sltTaskTemplate = () => cy.get('#mat-select-37');
+    txtTaskTemplateParent = () => cy.get('#mat-select-86');
     txtSubjectName = () => cy.get('#mat-input-4');
+    sltSubContractor = () => cy.get('#mat-select-38');
     txtDescription = () => cy.get('.note-editable');
+    sltForms = () => cy.get('#mat-select-69')
     sltDebitorInput = () => cy.get('#mat-select-2');
     txtRefNumber = () => cy.get('#mat-input-7');
-    btnSaveTask = () => cy.get('.btn btn-success active mat-flat-button');
+    sltVendorAssigned = () => cy.get('#mat-select-43');
+    btnSaveTask = () => cy.get('[class="btn btn-success active mat-flat-button"]');
+    toastProjectTasksCreated = () => cy.get('.toast-text').contains('New task is created successfully.');
 
 
     selectedProjectName(){
@@ -63,86 +67,188 @@ export class ProjectDetailsPage {
     addNewTaskToProjectEssentials(taskName,timeStamp){
         this.btnAddTask().click();
         cy.wait(200);
-    
         this.txtSubjectName().type(taskName + ' - Essentials only - ' + timeStamp + '{enter}');
 
         this.sltSite().click();
+        //cy.intercept('GET', '/api/sites/sitesForTaskCreation').as('sitesForTaskCreation');
+        //cy.wait('@sitesForTaskCreation').its('response.statusCode').should('eq', 200);
+        cy.wait(100);
+
+        this.sltSiteOption().type('Default'+ '{enter}');
+        cy.wait(100);
+        this.sltSiteOptionDropDown().eq(0).click();
+
+        cy.intercept('POST', '/api/task/new_task').as('newProjectTask');
+        this.btnSaveTask().click();
+        cy.wait('@newProjectTask').its('response.statusCode').should('eq', 200);
+        this.toastProjectTasksCreated().should('be.visible');
+
+        // cy.intercept('POST', '/api/services/my_tasks_optimised').as('reloadProjectTasks');
+        // cy.wait('@reloadProjectTasks').its('response.statusCode').should('eq', 200);
+
+        // cy.intercept('POST', '/api/services/countTaskSearchResults').as('countProjectTasks');
+        // cy.wait('@countProjectTasks').its('response.statusCode').should('eq', 200);
+
+    }
+
+    addNewTaskToProject(taskName,timeStamp){
+        this.btnAddTask().click();
+        cy.wait(200);
+    
+        this.txtSubjectName().type(taskName + ' - ' + timeStamp + '{enter}');
+        this.txtPopUpNewTask().should('be.visible').should('contain.text', 'Add task');
+
+        this.sltSite().click();
+        //cy.intercept('GET', '/api/sites/sitesForTaskCreation').as('sitesForTaskCreation');
+        //cy.wait('@sitesForTaskCreation').its('response.statusCode').should('eq', 200);
         cy.wait(100);
         this.sltSiteOption().type('Default'+ '{enter}');
         cy.wait(100);
         this.sltSiteOptionDropDown().eq(0).click();
 
+        this.sltSubContractor.eq(0).check();
+        // cy.intercept('GET', '/api/task/subcontractors').as('taskSubcontractors');
+
+        this.sltDebitorInput().click();
+         // cy.intercept('GET', '/api/task/debitors').as('taskDebitors');
+        cy.wait(100);
+        
+        this.sltDebitorInput().type('Default'+ '{enter}', { force: true });
+        this.sltDebitorInput().should('contain.text', 'Default');
+        
+        this.txtDescription().type(taskName +' - My Desc Test');
+
+        this.txtRefNumber.type(8888);
+
+        this.sltVendorAssigned().type('Vendor Test').eq(0).check().type('{esc}');
+
+        cy.intercept('POST', '/api/task/new_task').as('newProjectTask');
         this.btnSaveTask().click();
+        cy.wait('@newProjectTask').its('response.statusCode').should('eq', 200);
+        this.toastProjectTasksCreated().should('be.visible');
+
+        // cy.intercept('POST', '/api/services/my_tasks_optimised').as('reloadProjectTasks');
+        // cy.wait('@reloadProjectTasks').its('response.statusCode').should('eq', 200);
+
+        // cy.intercept('POST', '/api/services/countTaskSearchResults').as('countProjectTasks');
+        // cy.wait('@countProjectTasks').its('response.statusCode').should('eq', 200);
+    }
+
+    addNewTaskToProjectTaskTemplate(taskName,timeStamp){
+        this.btnAddTask().click();
+        cy.wait(200);
+    
+        this.txtSubjectName().type(taskName + ' - TaskTemplate ' + timeStamp + '{enter}');
+        this.txtPopUpNewTask().should('be.visible').should('contain.text', 'Add task');
+
+        this.sltSite().click();
+        //cy.intercept('GET', '/api/sites/sitesForTaskCreation').as('taskTemplates');
+        //cy.wait('@taskTemplates').its('response.statusCode').should('eq', 200);
+        cy.wait(100);
+        this.sltSiteOption().type('Default'+ '{enter}');
+        cy.wait(100);
+        this.sltSiteOptionDropDown().eq(0).click();
+
+        this.sltTaskTemplate().type('Default'+ '{enter}').eq(0).click();
+        this.txtTaskTemplateParent().type('Project Default Parent Task'+ '{enter}');
+
+
+        this.sltSubContractor.eq(0).check();
+        // cy.intercept('GET', '/api/task/subcontractors').as('taskSubcontractors');
+        
+        this.sltDebitorInput().click();
+         // cy.intercept('GET', '/api/task/debitors').as('taskDebitors');
+        cy.wait(100);
+        
+        this.sltDebitorInput().type('Default'+ '{enter}', { force: true });
+        this.sltDebitorInput().should('contain.text', 'Default');
+        
+        this.txtDescription().type(taskName +' - My Desc Test');
+
+        this.txtRefNumber.type(8888);
+
+        this.sltVendorAssigned().type('Vendor Test').eq(0).check().type('{esc}');
+
+        cy.intercept('POST', '/api/task/new_task').as('newProjectTask');
+        this.btnSaveTask().click();
+        cy.wait('@newProjectTask').its('response.statusCode').should('eq', 200);
+        this.toastProjectTasksCreated().should('be.visible');
+
+        // cy.intercept('POST', '/api/services/my_tasks_optimised').as('reloadProjectTasks');
+        // cy.wait('@reloadProjectTasks').its('response.statusCode').should('eq', 200);
+
+        // cy.intercept('POST', '/api/services/countTaskSearchResults').as('countProjectTasks');
+        // cy.wait('@countProjectTasks').its('response.statusCode').should('eq', 200);
 
     }
 
-    // addNewTaskToProjectNoForms(taskName,timeStamp){
-    //     this.btnAddTask().click();
-    //     cy.wait(200);
+    addNewTaskToProjectWithForm(taskName,timeStamp){
+        this.btnAddTask().click();
+        cy.wait(200);
     
-    //     this.txtSubjectName().type(taskName + ' - ' + timeStamp + '{enter}');
-    //     this.txtPopUpNewTask().should('be.visible').should('contain.text', 'Add task');
+        this.txtSubjectName().type(taskName + ' - With Form - ' + timeStamp + '{enter}');
+        this.txtPopUpNewTask().should('be.visible').should('contain.text', 'Add task');
 
-    //     // this.sltSite().click();
-    //     // cy.wait(100);
-    //     // this.sltSiteOption().type('Default'+ '{enter}');
-    //     // cy.wait(100);
-    //     // this.sltSiteOption().eq(0).click();
+        this.sltSite().click();
+        //cy.intercept('GET', '/api/sites/sitesForTaskCreation').as('sitesForTaskCreation');
+        //cy.wait('@sitesForTaskCreation').its('response.statusCode').should('eq', 200);
+        cy.wait(100);
+        this.sltSiteOption().type('Default'+ '{enter}');
+        cy.wait(100);
+        this.sltSiteOptionDropDown().eq(0).click();
 
-    //     this.sltDebitorInput().click();
-    //     cy.wait(100);
-    //     this.sltDebitorInput().type('Default'+ '{enter}', { force: true });
-    //     this.sltDebitorInput().should('contain.text', 'Default');
+        this.sltSubContractor.eq(0).check();
+        // cy.intercept('GET', '/api/task/subcontractors').as('taskSubcontractors');
 
-    //     this.txtDescription().type(taskName +' - My Desc Test');
+        this.sltDebitorInput().click();
+         // cy.intercept('GET', '/api/task/debitors').as('taskDebitors');
+        cy.wait(100);
+        this.sltDebitorInput().type('Default'+ '{enter}', { force: true });
+        this.sltDebitorInput().should('contain.text', 'Default');
+        
+        this.txtDescription().type(taskName +' - My Desc Test');
 
-    //     this.txtRefNumber.type(8888);
+        this.sltForms().type('Default' + '{enter}');
+        // cy.intercept('GET', '/api/task/forms').as('taskForms');
+        
+        this.txtRefNumber.type(8888);
 
-    // }
+        this.sltVendorAssigned().type('Vendor Test').eq(0).check().type('{esc}');
+        // cy.intercept('GET', '/api/task/assignee').as('taskVendorAssignee');
+        
+        cy.intercept('POST', '/api/task/new_task').as('newProjectTask');
+        this.btnSaveTask().click();
+        cy.wait('@newProjectTask').its('response.statusCode').should('eq', 200);
+        this.toastProjectTasksCreated().should('be.visible');
 
-    // addNewTaskToProjectWithForm(taskName,timeStamp){
-    //     this.btnAddTask().click();
-    //     cy.wait(200);
+        // cy.intercept('POST', '/api/services/my_tasks_optimised').as('reloadProjectTasks');
+        // cy.wait('@reloadProjectTasks').its('response.statusCode').should('eq', 200);
+
+        // cy.intercept('POST', '/api/services/countTaskSearchResults').as('countProjectTasks');
+        // cy.wait('@countProjectTasks').its('response.statusCode').should('eq', 200);
+    }
+
+    addNewTaskToProjectPeriodic(taskName,timeStamp){
+        this.btnAddTask().click();
+        cy.wait(200);
     
-    //     this.txtSubjectName().type(taskName + ' - With Form - ' + timeStamp + '{enter}');
-    //     this.txtPopUpNewTask().should('be.visible').should('contain.text', 'Add task');
+        this.txtSubjectName().type(taskName + ' - Periodic - ' + timeStamp + '{enter}');
+        this.txtPopUpNewTask().should('be.visible').should('contain.text', 'Add task');
 
-    //     // this.sltSite().click();
-    //     // cy.wait(100);
-    //     // this.sltSiteOption().type('Default'+ '{enter}');
-    //     // cy.wait(100);
-    //     // this.sltSiteOption().eq(0).click();
+        // this.sltSite().click();
+        // cy.wait(100);
+        // this.sltSiteOption().type('Default'+ '{enter}');
+        // cy.wait(100);
+        // this.sltSiteOption().eq(0).click();
 
-    //     this.sltDebitorInput().click();
-    //     cy.wait(100);
-    //     this.sltDebitorInput().type('Default'+ '{enter}', { force: true });
-    //     this.sltDebitorInput().should('contain.text', 'Default');
+        this.sltDebitorInput().click();
+        cy.wait(100);
+        this.sltDebitorInput().type('Default'+ '{enter}', { force: true });
+        this.sltDebitorInput().should('contain.text', 'Default');
 
-    //     this.txtDescription().type(taskName +' - My Desc Test');
-    //     this.txtRefNumber.type(8888);
-    // }
-
-        // addNewTaskToProjectPeriodic(taskName,timeStamp){
-    //     this.btnAddTask().click();
-    //     cy.wait(200);
-    
-    //     this.txtSubjectName().type(taskName + ' - Periodic - ' + timeStamp + '{enter}');
-    //     this.txtPopUpNewTask().should('be.visible').should('contain.text', 'Add task');
-
-    //     // this.sltSite().click();
-    //     // cy.wait(100);
-    //     // this.sltSiteOption().type('Default'+ '{enter}');
-    //     // cy.wait(100);
-    //     // this.sltSiteOption().eq(0).click();
-
-    //     this.sltDebitorInput().click();
-    //     cy.wait(100);
-    //     this.sltDebitorInput().type('Default'+ '{enter}', { force: true });
-    //     this.sltDebitorInput().should('contain.text', 'Default');
-
-    //     this.txtDescription().type(taskName +' - My Desc Test');
-    //     this.txtRefNumber.type(8888);
-    // }
+        this.txtDescription().type(taskName +' - My Desc Test');
+        this.txtRefNumber.type(8888);
+    }
 
 
     
