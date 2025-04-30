@@ -22,7 +22,7 @@ export class ProjectDetailsPage {
     txtDescription = () => cy.get('.note-editable');
     sltDebitorInput = () => cy.get('[aria-label="Debitor"]');
     txtRefNumber = () => cy.get('[placeholder="Ref. number"]');
-    
+
     btnSaveTask = () => cy.get('[class="btn btn-success active mat-flat-button"]');
     toastProjectTasksCreated = () => cy.get('.toast-text').contains('New task is created successfully.');
 
@@ -37,7 +37,7 @@ export class ProjectDetailsPage {
 
         // cy.intercept('POST', '/api/Projects/project').as('projectDetails');
         // cy.intercept('POST', '/api/Projects/projectDoctrine').as('projectDoctrine');
-        // cy.wait(2000);
+        // cy.wait(2500);
         // cy.wait('@projectDoctrine').its('response.statusCode').should('eq', 200);
         // cy.wait('@projectDetails').its('response.statusCode').should('eq', 200);
         cy.wait(2100);
@@ -65,24 +65,20 @@ export class ProjectDetailsPage {
         this.txtSubjectName().type(taskName + ' - Essentials only - ' + timeStamp + '{enter}');
 
         this.sltSite().click();
-        //cy.intercept('GET', '/api/sites/sitesForTaskCreation').as('sitesForTaskCreation');
-        //cy.wait('@sitesForTaskCreation').its('response.statusCode').should('eq', 200);
         cy.wait(100);
-
         this.sltSiteOption().type('Default'+ '{enter}');
-        cy.wait(100);
+        cy.wait(700);
         this.sltOptionDropDown().eq(0).click();
-
+    
         cy.intercept('POST', '/api/task/new_task').as('newProjectTask');
         this.btnSaveTask().click();
         cy.wait('@newProjectTask').its('response.statusCode').should('eq', 200);
         this.toastProjectTasksCreated().should('be.visible');
 
-        // cy.intercept('POST', '/api/services/my_tasks_optimised').as('reloadProjectTasks');
-        // cy.wait('@reloadProjectTasks').its('response.statusCode').should('eq', 200);
-
-        // cy.intercept('POST', '/api/services/countTaskSearchResults').as('countProjectTasks');
-        // cy.wait('@countProjectTasks').its('response.statusCode').should('eq', 200);
+        cy.intercept('POST', '/api/services/my_tasks_optimised').as('reloadProjectTasks');
+        cy.intercept('POST', '/api/services/countTaskSearchResults').as('countProjectTasks');
+        cy.wait('@countProjectTasks').its('response.statusCode').should('eq', 200);
+        cy.wait('@reloadProjectTasks').its('response.statusCode').should('eq', 200);
 
     }
 
@@ -94,16 +90,14 @@ export class ProjectDetailsPage {
         this.txtPopUpNewTask().should('be.visible').should('contain.text', 'Add task');
 
         this.sltSite().click();
-       // cy.intercept('GET', '/api/sites/sitesForTaskCreation').as('sitesForTaskCreation');
         cy.wait(100);
         this.sltSiteOption().type('Default'+ '{enter}');
-        //cy.wait('@sitesForTaskCreation').its('response.statusCode').should('eq', 200);    
         cy.wait(700);
         this.sltOptionDropDown().eq(0).click();
 
         this.sltDebitorInput().click();
-         // cy.intercept('GET', '/api/task/debitors').as('taskDebitors');
-        cy.wait(100);
+        cy.wait(100);    
+
         this.sltDebitorInput().type('Default'+ '{enter}', { force: true });
         this.sltDebitorInput().should('contain.text', 'Default');
         
@@ -116,11 +110,10 @@ export class ProjectDetailsPage {
         cy.wait('@newProjectTask').its('response.statusCode').should('eq', 200);
         this.toastProjectTasksCreated().should('be.visible');
 
-        // cy.intercept('POST', '/api/services/my_tasks_optimised').as('reloadProjectTasks');
-        // cy.wait('@reloadProjectTasks').its('response.statusCode').should('eq', 200);
-        //cy.wait(500);
-        // cy.intercept('POST', '/api/services/countTaskSearchResults').as('countProjectTasks');
-        // cy.wait('@countProjectTasks').its('response.statusCode').should('eq', 200);
+        cy.intercept('POST', '/api/services/my_tasks_optimised').as('reloadProjectTasks');
+        cy.intercept('POST', '/api/services/countTaskSearchResults').as('countProjectTasks');
+        cy.wait('@countProjectTasks').its('response.statusCode').should('eq', 200);
+        cy.wait('@reloadProjectTasks').its('response.statusCode').should('eq', 200);
     }
 
 

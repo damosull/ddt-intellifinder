@@ -39,6 +39,7 @@ describe('Projects Test Suite', () => {
     
   });
 
+//sorting projects
 it('Sort all columns, export csv and check pagination Projects List page', () => {
     sideMenuPage.openProjectsPage();
 
@@ -58,6 +59,7 @@ it('Sort all columns, export csv and check pagination Projects List page', () =>
 
 });
 
+//main project page actions
 it('Create, Search Project and Archive via Projects List page', () => {
     sideMenuPage.openProjectsPage();
     const projectName = `Cypress Created Name - ${timeStamp}`;
@@ -73,7 +75,7 @@ it('Create, Search Project and Archive via Projects List page', () => {
 
 });
 
-//archived page
+//archived projects page
 it('Trash and Restore Project via Archived Projects page', () => {
    sideMenuPage.openProjectsArchivePage();
 
@@ -110,7 +112,7 @@ it('Archive and Restore Project via Trashed Projects page', () => {
 });
 
 //Project Details page    
-it.only('Project Details via Task Page', () => {
+it('Project Details via Task Page', () => {
   sideMenuPage.openProjectsPage();
 
   projectsPage.searchProjects(searchName);
