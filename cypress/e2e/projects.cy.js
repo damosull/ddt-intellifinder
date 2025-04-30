@@ -117,7 +117,7 @@ it('Archive and Restore Project via Trashed Projects page', () => {
 });
 
 //Project Details page    
-it.only('Project Details via Task Page', () => {
+it('Project Details via Task Page', () => {
   sideMenuPage.openProjectsPage();
 
   projectsPage.searchProjects(searchName);
@@ -129,11 +129,11 @@ it.only('Project Details via Task Page', () => {
      //go to project Details page -- So it in another place -> Task List page 
     // Now proceed to select and validate
     projectDetailsPage.selectProject();
-    // projectDetailsPage.pageTitle(selectedProject.trim());
-    // projectDetailsPage.openInformationPopUp(selectedProject.trim());
+    projectDetailsPage.pageTitle(selectedProject.trim());
+    projectDetailsPage.openInformationPopUp(selectedProject.trim());
 
-    // projectDetailsPage.addNewTaskToProjectEssentials(taskName,timeStamp);
-    // projectDetailsPage.addNewTaskToProject(taskName,timeStamp);
+    projectDetailsPage.addNewTaskToProjectEssentials(taskName,timeStamp);
+    projectDetailsPage.addNewTaskToProject(taskName,timeStamp);
     
     updateProjectPage.editProject(selectedProject.trim(),timeStamp,newDate,testText);
 
