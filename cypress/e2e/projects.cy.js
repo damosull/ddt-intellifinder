@@ -126,10 +126,7 @@ it.only('Project Details via Task Page', () => {
     projectDetailsPage.openInformationPopUp(selectedProject.trim());
 
     projectDetailsPage.addNewTaskToProjectEssentials(taskName,timeStamp);
-    //projectDetailsPage.addNewTaskToProjectNoForms(taskName,timeStamp);
-    //projectDetailsPage.addNewTaskToProjectWithForm(taskName,timeStamp);
-    //projectDetailsPage.addNewTaskToProjectPeriodic(taskName,timeStamp);
-
+    projectDetailsPage.addNewTaskToProject(taskName,timeStamp);
 
   });
 });
