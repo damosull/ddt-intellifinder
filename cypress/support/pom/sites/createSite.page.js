@@ -4,12 +4,14 @@ export class CreateSitePage {
     txtLatitude = () => cy.get('[type="number"]').eq(0);
     txtLongitude = () => cy.get('[type="number"]').eq(1);
     selectCategory = () => cy.get('#select2-categoryDropdown-container');
+
     sitePicture = () => cy.get('#sitePic');
     txtTelephone = () => cy.get('[title="Telephone"]');
     txtNFC = () => cy.get('#siteNfc');
     txtRfidTag = () => cy.get('[title="RFID tag"]');
     txtQrCode = () => cy.get('[title="QR code"]');
     txtDescription = () => cy.get('.note-editing-area');
+    
     btnSave = () => cy.get('[title="Save"]');
     txtCategorySearch = () => cy.get('[type="search"]');
     txtCategorySearchOptions = () => cy.get('[role="option"]');

@@ -1,6 +1,7 @@
 /// <reference types="cypress" />
 import { LoginPage } from "../support/pom/Login.page";
 import { SideMenuPage } from "../support/pom/SideMenu.page";
+
 import { CreateSitePage } from "../support/pom/sites/CreateSite.page";
 import { UpdateSitePage } from "../support/pom/sites/UpdateSite.page";
 import { DeleteSitePage } from "../support/pom/sites/DeleteSite.page";
@@ -11,6 +12,7 @@ import { SitesNearestPage } from "../support/pom/sites/SitesNearest.page";
 describe('Sites Test Suite', () => {
     const loginPage = new LoginPage();
     const sideMenuPage = new SideMenuPage();
+
     const createSitePage = new CreateSitePage();
     const updateSitePage = new UpdateSitePage();
     const deleteSitePage = new DeleteSitePage();
