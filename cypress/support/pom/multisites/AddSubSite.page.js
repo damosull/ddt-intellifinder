@@ -7,9 +7,13 @@ export class AddSubSitePage {
     //create new site when adding a Sub Site
     sltSubSiteDropDown = () => cy.get('#select2-availableSites-container');
 
+    sltDropDownSearchField = () => cy.get('.select2-container--open .select2-search__field');
+  
     //add Sub Site to an image
     sltDropDownResult = () => cy.get('.select2-results__options');
+
     btnSaveSubSite = () => cy.get('.btn.btn-success.customBtn');
+    toastMultiSiteCreated = () => cy.get('.toast-text').contains('Site updated.');
    
     sltSubSite() {
         //click on SubSite icon under the image
@@ -23,15 +27,22 @@ export class AddSubSitePage {
         cy.wait('@getSubSiteDropdown').its('response.statusCode').should('eq', 200);
     }
 
+    // open the select dropdown and wait for dropdown options to be visible Find the Select2 search input field that appears type Default and select "Default".
     addPSubSite(){
-        // open the select dropdown
-        this.sltSubSiteDropDown().click(); 
+        this.sltSubSiteDropDown().click();
+        cy.get('.select2-container--open .select2-search__field').should('be.visible').type('Default' + '{enter}', { force: true });
 
-        // Wait for dropdown options to be visible and select "Default".
-        this.sltDropDownResult().contains('Default').click({ force: true });
-    
-        // Click the save button
+        // this.sltDropDownResult().should('contain.text', 'Default').click({ force: true });
+
+        cy.wait(500);
+        this.sltSubSiteDropDown().should('contain.text', 'Default');
+  
+        cy.intercept('POST', '/api/multiSites/submit_sub_site').as('saveSubSite');
         this.btnSaveSubSite().click();
+        cy.wait('@saveSubSite').its('response.statusCode').should('eq', 200);
+
+        cy.intercept('POST', '/api/multiSites/get_sub_sites').as('allSubSite');
+        cy.wait('@allSubSite').its('response.statusCode').should('eq', 200);
     }
     
 }

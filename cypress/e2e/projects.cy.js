@@ -33,9 +33,11 @@ describe('Projects Test Suite', () => {
     
   });
 
-it.only('Sort all columns, export csv and check pagination Projects List page', () => {
+it('Sort all columns, export csv and check pagination Projects List page', () => {
     sideMenuPage.openProjectsPage();
 
+    projectsPage.exportCSVData();
+    
     //check load data
     // projectsPage.loadALlProjects();
 
@@ -48,10 +50,7 @@ it.only('Sort all columns, export csv and check pagination Projects List page', 
     //initiate 'End Date' sorting check that it is acceding order
     sortProjectsPage.sortEndDate(sortedIconAsc, sortedIconDesc, columnEndDateIndex);
 
-
-    projectsPage.exportCSVData();
-
-
+   
 
 });
 
@@ -70,6 +69,7 @@ it('Create, Search Project and Archive via Projects List page', () => {
 
 });
 
+//archived page
 it('Trash and Restore Project via Archived Projects page', () => {
    sideMenuPage.openProjectsArchivePage();
 
@@ -84,6 +84,7 @@ it('Trash and Restore Project via Archived Projects page', () => {
    projectsPage.searchProjectsClear();
 });
 
+//trashed projects page    
 it('Archive and Restore Project via Trashed Projects page', () => {
   sideMenuPage.openProjectsTrashPage();
 

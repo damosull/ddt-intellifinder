@@ -9,7 +9,6 @@ export class ArchiveProjectsPage {
         cy.wait(2000);
         this.txtSearch().should('be.visible');
         this.txtSearch().clear().type(projectName + '{enter}');
-        cy.wait(2000);
     }
 
     selectArchivedProject(){
@@ -32,7 +31,8 @@ export class ArchiveProjectsPage {
         cy.intercept('PUT', '/api/Projects/save_projects').as('saveRequest');
         cy.intercept('POST', '/api/Projects/projects_with_type').as('allProjects');
         cy.contains('Yes').click();
-
+        cy.wait(100);
+        
         cy.wait('@saveRequest').its('response.statusCode').should('eq', 200);
         cy.wait('@allProjects').its('response.statusCode').should('eq', 200);
         

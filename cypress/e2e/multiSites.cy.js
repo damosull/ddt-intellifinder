@@ -63,14 +63,11 @@ describe('MultiSites Test Suite', () => {
       multiSitesPage.selectMultiSite(searchName);
       
       //currently not tested features
-      // updateMultiSitesPage.addNewPlanDrawing();
-      // updateMultiSitesPage.editPlanDrawing();
+      updateMultiSitesPage.addNewPlanDrawing();
+      updateMultiSitesPage.editPlanDrawing();
+      updateMultiSitesPage.deletePlanDrawing();
 
       addSubSitePage.sltSubSite();
-
-      //currently not tested features
-      // addSubSitePage.createSubSite(subSiteName, latitude, longitude);
-
       addSubSitePage.addPSubSite();
   
   });
