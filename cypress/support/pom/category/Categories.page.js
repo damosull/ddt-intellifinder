@@ -18,7 +18,7 @@ export class CategoriesPage {
     }
 
     searchCategory(categoryName) {
-        this.txtSearch().clear().type(categoryName + 'test');
+        this.txtSearch().clear().type(categoryName);
         this.btnSearch().click();
         cy.wait('@allCategories').its('response.statusCode').should('eq', 200);
     }

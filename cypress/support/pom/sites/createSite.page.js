@@ -26,6 +26,7 @@ export class CreateSitePage {
         cy.intercept('POST', '/api/categories/all_categories').as('postRequest');
         this.txtCategorySearch().type('Default')
         cy.wait('@postRequest').its('response.statusCode').should('eq', 200);
+        cy.wait(100);
         this.txtCategorySearchOptions().eq(0).click()
         this.sitePicture().attachFile('testImage.jpg');
         this.txtTelephone().type('1234567')
