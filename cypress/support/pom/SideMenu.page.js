@@ -4,7 +4,8 @@ export class SideMenuPage {
     sitesLink = () => cy.contains('Sites');
     multiSitesLink = () => cy.contains('Multi-Sites');
     projectsLink = () => cy.contains('Projects');
-    viewAllLink = () => cy.get('[routerlink="/projects/list-projects/latest"]');
+    viewAllProjectsLink = () => cy.get('[routerlink="/projects/list-projects/latest"]');
+    // viewArchivedProjectsLink = () => cy.get('[routerlink="/projects/list-projects/archive"]');
 
     openCategoriesPage() {
         cy.intercept('api/categories/all_categories').as('allCategories');
@@ -28,6 +29,12 @@ export class SideMenuPage {
     openProjectsPage() {
         this.navbarToggle().click();
         this.projectsLink().click();
-        this.viewAllLink().click();
+        this.viewAllProjectsLink().click();
     }
+
+    // openProjectsArchivePage() {
+    //     this.navbarToggle().click();
+    //     this.projectsLink().click();
+    //     this.viewArchivedProjectsLink().click();
+    // }
 }

@@ -1,4 +1,4 @@
-export class CreateProjectPage {
+export class CreateProjectsPage {
     btnAddProject = () => cy.get('[class="fas fa-plus"]');
      sltStartDate = () => cy.get(['id="project_startDate"']);
      txtProjectName = () => cy.get('input[class="form-control ng-untouched ng-pristine ng-valid"]');

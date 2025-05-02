@@ -1,22 +1,43 @@
 export class ProjectsPage {
     txtSearch = () => cy.get('[type="text"][placeholder="Search"]');
-    //txtSearch = () => cy.get('[class="form-group footable-filtering-search"]');
+   
+
+    btnTableCheckbox = () => cy.get('input[class="projectCB"][type="checkbox"]');
     
-    // btnTableRow = () => cy.get("tr");
+    btnSelectActions = () => cy.get('div>select');
+    confirmationTitle = () => cy.get('.swal-title').contains('Are you sure?');
+    btnClearSearch = () => cy.get('[class="btn btn-primary"][type="button"]')
 
-    //btnFilterDate = () => cy.contains('Start date');
+    
+    // btnFilterSubject = () => cy.contains('Subject');
+    // btnFilterStartDate = () => cy.contains('Start date');
+    // btnFilterEndDate = () => cy.contains('End date');
 
-    searchProjects(testText) {
-       this.txtSearch().should('be.visible');
-      this.txtSearch().type(testText + '{enter}');
-    //    this.txtSearch().type(testText);
-       
-       
-      // this.siteNameOnList().eq(0).should('be.visible', { timeout: 20000 }).and('have.text', testText);
+    searchProjects(projectName) {
+        this.txtSearch().should('be.visible');
+        this.txtSearch().type(projectName + '{enter}');
+        cy.wait(2000);
     }
 
-    // filterDate(){
-    //     this.btnFilterDate.click();
-    //     }
+    selectProjectCheckbox(){
+        this.btnTableCheckbox().check();
+    }
 
+    archiveProjects(){
+        this.btnSelectActions().select(1).should('have.value', 'archive');
+  
+        cy.wait(2000);
+        this.confirmationTitle().should('be.visible');
+        cy.contains('Yes').click();
+
+    }
+
+    searchProjectsClear() {
+        this.btnClearSearch().click();
+    }
+
+
+    // filterDate(){
+    //      this.btnFilterStartDate.click();
+    // }
 }
