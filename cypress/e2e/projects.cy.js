@@ -1,4 +1,6 @@
 /// <reference types="cypress" />
+import dayjs from 'dayjs'
+
 import { LoginPage } from "../support/pom/Login.page";
 import { SideMenuPage } from "../support/pom/SideMenu.page";
 
@@ -8,6 +10,7 @@ import { ArchiveProjectsPage } from "../support/pom/projects/ArchiveProjects.pag
 import { TrashProjectsPage } from "../support/pom/projects/TrashProjects.page.js";
 import { SortProjectsPage } from "../support/pom/projects/SortProjects.page.js";
 import { ProjectDetailsPage } from "../support/pom/projects/ProjectDetails.page.js"
+import { UpdateProjectsPage } from "../support/pom/projects/UpdateProjects.page.js"
 
 describe('Projects Test Suite', () => {
 
@@ -21,7 +24,7 @@ describe('Projects Test Suite', () => {
   const trashedProjectsPage = new TrashProjectsPage();
 
   const projectDetailsPage = new ProjectDetailsPage();
-
+  const updateProjectPage = new UpdateProjectsPage();
 
   const timeStamp = new Date().getTime();
   const testText = 'test';
@@ -32,6 +35,8 @@ describe('Projects Test Suite', () => {
   const columnStartDateIndex = 1;
   const columnEndDateIndex = 2;
   const taskName = 'Cypress Created Task';
+
+  const newDate = dayjs().add(1, 'year').add(1, 'month').add(1, 'day').format('DD/MM/YYYY');
 
   beforeEach(() => {
     cy.visit('/');
@@ -129,6 +134,8 @@ it('Project Details via Task Page', () => {
 
     projectDetailsPage.addNewTaskToProjectEssentials(taskName,timeStamp);
     projectDetailsPage.addNewTaskToProject(taskName,timeStamp);
+    
+    updateProjectPage.editProject(selectedProject.trim(),timeStamp,newDate,testText);
 
   });
 });
