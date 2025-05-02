@@ -6,12 +6,14 @@ import { ProjectsPage } from "../support/pom/projects/Projects.page.js";
 import { CreateProjectsPage } from "../support/pom/projects/CreateProjects.page.js";
 import { ArchiveProjectsPage } from "../support/pom/projects/ArchiveProjects.page.js";
 import { TrashProjectsPage } from "../support/pom/projects/TrashProjects.page.js";
+import { SortProjectsPage } from "../support/pom/projects/SortProjects.page.js";
 
 describe('Projects Test Suite', () => {
 
   const loginPage = new LoginPage();
   const sideMenuPage = new SideMenuPage();
   const projectsPage = new ProjectsPage();
+  const sortProjectsPage = new SortProjectsPage();
   const createProjectsPage = new CreateProjectsPage();
   const archiveProjectsPage = new ArchiveProjectsPage();
   const trashedProjectsPage = new TrashProjectsPage();
@@ -19,6 +21,11 @@ describe('Projects Test Suite', () => {
   const timeStamp = new Date().getTime();
   const testText = 'test';
   const searchName = 'Created Name';
+  const sortedIconAsc = '[class="fooicon fooicon-sort-asc"]';
+  const sortedIconDesc = '[class="fooicon fooicon-sort-desc"]';
+  const columnSubjectIndex = 0;
+  const columnStartDateIndex = 1;
+  const columnEndDateIndex = 2;
 
   beforeEach(() => {
     cy.visit('/');
@@ -26,7 +33,29 @@ describe('Projects Test Suite', () => {
     
   });
 
-  it('Create, Search Project and Archive via Projects List page', () => {
+it.only('Sort all columns, export csv and check pagination Projects List page', () => {
+    sideMenuPage.openProjectsPage();
+
+    //check load data
+    // projectsPage.loadALlProjects();
+
+    //initiate 'Subject' sorting check that it is acceding order
+    sortProjectsPage.sortSubject(sortedIconAsc, sortedIconDesc, columnSubjectIndex);
+
+    //initiate 'Start Date' sorting check that it is acceding order
+    sortProjectsPage.sortStartDate(sortedIconAsc, sortedIconDesc, columnStartDateIndex);
+
+    //initiate 'End Date' sorting check that it is acceding order
+    sortProjectsPage.sortEndDate(sortedIconAsc, sortedIconDesc, columnEndDateIndex);
+
+
+    projectsPage.exportCSVData();
+
+
+
+});
+
+it('Create, Search Project and Archive via Projects List page', () => {
     sideMenuPage.openProjectsPage();
     const projectName = `Created Name - ${timeStamp}`;
 
@@ -48,11 +77,10 @@ it('Trash and Restore Project via Archived Projects page', () => {
    archiveProjectsPage.searchArchivedProjects(searchName);
    archiveProjectsPage.selectSeveralArchivedProject();
    archiveProjectsPage.trashProjects();
-   projectsPage.searchProjectsClear();
 
    //restore project
    archiveProjectsPage.selectArchivedProject();
-   archiveProjectsPage.restoreProject();
+   trashedProjectsPage.restoreProject();
    projectsPage.searchProjectsClear();
 });
 
