@@ -25,6 +25,7 @@ export class CreateProjectsPage {
         cy.wait('@saveRequest').its('response.statusCode').should('eq', 200);
 
         this.toastProjectCreated().should('be.visible');
+        cy.wait(2000);
        
     }
 }

@@ -14,6 +14,7 @@ describe('Projects Test Suite', () => {
   const createProjectsPage = new CreateProjectsPage();
   const archiveProjectsPage = new ArchiveProjectsPage();
 
+
   const timeStamp = new Date().getTime();
   const testText = 'test';
   const searchName = 'Created Name';
@@ -31,25 +32,30 @@ describe('Projects Test Suite', () => {
     //create project
     createProjectsPage.createNewProject(projectName,timeStamp,testText);
 
-    //search test
+    //search test, select checkbox and use archive action on a selected project then clear search
     projectsPage.searchProjects(projectName);
-
-    //select checkbox
     projectsPage.selectProjectCheckbox();
-
-    //projectsPage.btnFilterDate().click();
-
-    //use archive action on a selected project
     projectsPage.archiveProjects();
-
     projectsPage.searchProjectsClear();
+
+    //do date filtering
+    //projectsPage.btnFilterDate().click();
 
 });
 
-// it.only('Delete Project via Archived Projects List page', () => {
-//    sideMenuPage.openProjectsArchivePage();
-//    archiveProjectsPage.searchArchivedProjects(searchName);
+it('Trash and Restore Project via Archived Projects page', () => {
+   sideMenuPage.openProjectsArchivePage();
 
-// });
+   //trash project 
+   archiveProjectsPage.searchArchivedProjects(searchName);
+   archiveProjectsPage.selectSeveralArchivedProject();
+   archiveProjectsPage.trashProjects();
+   projectsPage.searchProjectsClear();
+
+   //restore project
+   archiveProjectsPage.selectArchivedProject();
+   archiveProjectsPage.restoreProject();
+   projectsPage.searchProjectsClear();
+});
 
 })
