@@ -42,7 +42,7 @@ describe('MultiSites Test Suite', () => {
 
   //creates a new site with a unique name and then searches for this specific MultiSite
   it('Test MultiSites', () => {
-    const multiSiteName = `Created Name - ${searchName + timestamp}`;
+    const multiSiteName = `Cypress Created Name - ${searchName + timestamp}`;
     multiSitesPage.btnCreateMultiSites().click();
     createMultiSitesPage.createMultiSite(multiSiteName);
     

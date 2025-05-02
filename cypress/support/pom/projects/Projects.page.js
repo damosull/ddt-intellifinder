@@ -20,6 +20,7 @@ export class ProjectsPage {
     sltPaginationOptions = () => cy.get('[data-dashlane-rid="aea5cb3f64cb7861"]');
 
     searchProjects(projectName) {
+        cy.wait(2000);
         this.txtSearch().should('be.visible');
         this.txtSearch().type(projectName + '{enter}');
         cy.wait(2000);
@@ -56,7 +57,7 @@ export class ProjectsPage {
         this.brnExportCSV().eq(1).click();    
        
         this.exportWindow().should('be.visible');
-        //figure out how to add a token to api call.
+        //figure out how to add a login token to api call.
         // cy.intercept('GET', '/api/Projects/fields_list').as('exportFields');
         // cy.wait('@exportFields').its('response.statusCode').should('eq', 200);
 
