@@ -2,7 +2,7 @@ export class CreateMultiSitesPage {
    
    txtMultiSiteName = () => cy.get('[title="Site name"]');
 
-    sitePicture = () => cy.get('#sitePic');
+    multiSitePicture = () => cy.get('#sitePic');
     txtTelephone = () => cy.get('[title="Telephone"]');
     txtDescription = () => cy.get('[title="Description"]');
 
@@ -13,7 +13,7 @@ export class CreateMultiSitesPage {
      createMultiSite(siteName) {
        this.txtMultiSiteName().clear().type(siteName);
 
-        this.sitePicture().attachFile('testImage.jpg');
+        this.multiSitePicture().attachFile('testImage.jpg');
         this.txtTelephone().type('88888888');
         this.txtDescription().type('My Desc - This is a test');
 
