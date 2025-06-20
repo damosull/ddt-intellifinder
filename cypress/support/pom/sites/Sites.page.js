@@ -10,7 +10,7 @@ export class SitesPage {
         this.txtSearch().type(siteName + '{enter}')
         cy.wait('@searchRequest').its('response.statusCode').should('eq', 200);
         this.siteNameOnList().eq(0).should('be.visible', { timeout: 20000 }).and('have.text', siteName);
-        this.tableCell().eq(2).should('be.visible', { timeout: 20000 }).and('have.text', `Lat. ${latitude} Lon. ${longitude}`);
+        this.tableCell().eq(3).should('be.visible', { timeout: 20000 }).and('have.text', `Lat. ${latitude} Lon. ${longitude}`);
     }
 
     searchSiteWithNoResults(siteName) {
