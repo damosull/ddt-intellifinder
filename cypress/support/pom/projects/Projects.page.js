@@ -1,84 +1,73 @@
-import { ProjectsCommon } from './ProjectsCommon.page.js';
+import { ProjectsCommon } from "./ProjectsCommon.page.js";
 
 export class ProjectsPage {
-    txtSearch = () => cy.get('[type="text"][placeholder="Search"]');
+  txtSearch = () => cy.get('[type="text"][placeholder="Search"]');
 
-    chkSelectProject = () => cy.get('.projectCB');
-    
-    confirmationTitle = () => cy.get('.swal-title').contains('Are you sure?');
-    btnClearSearch = () => cy.get('[class="btn btn-primary"][type="button"]')
+  chkSelectProject = () => cy.get(".projectCB");
 
-    sltActions = () => cy.get('.actionsList');
+  confirmationTitle = () => cy.get(".swal-title").contains("Are you sure?");
 
-    exportCsvButtons = () => cy.get('[title="Export task data"]');
-    exportModal = () => cy.get('#exportTasksDataModal');
+  sltActions = () => cy.get(".actionsList");
 
-    selectExportSubjects = () => cy.get('.selection');
-    selectExportOption = () => cy.get('.select2-results__options');
-    
-    btnSave = () => cy.get('[title="Save"]');
-    btnCancel = () => cy.get('[title="Cancel"]');
+  exportCsvButtons = () => cy.get('[title="Export task data"]');
+  exportModal = () => cy.get("#exportTasksDataModal");
 
-    paginationLabel = () => cy.get('.label label-default');
-    sltPaginationOptions = () => cy.get('[data-dashlane-rid="aea5cb3f64cb7861"]');
+  selectExportSubjects = () => cy.get(".selection");
+  selectExportOption = () => cy.get(".select2-results__options");
 
-    projectNames = () => cy.get('tbody tr td:nth-child(2) a.orange');
+  btnSave = () => cy.get('[title="Save"]');
+  btnCancel = () => cy.get('[title="Cancel"]');
 
-    searchProjects(projectName) {
-        this.txtSearch().should('be.visible');
-        this.txtSearch().type(projectName + '{enter}');
-        cy.wait(1000);
-    }
+  paginationLabel = () => cy.get(".label label-default");
+  sltPaginationOptions = () => cy.get('[data-dashlane-rid="aea5cb3f64cb7861"]');
 
-    clickFirstProjectName() {
-        cy.intercept('POST', '/api/Projects/project').as('projectDetails');
-        cy.intercept('POST', '/api/Projects/projectDoctrine').as('projectDoctrine');
-        this.projectNames().eq(0).click();
-        cy.wait('@projectDoctrine').its('response.statusCode').should('eq', 200);
-        cy.wait('@projectDetails').its('response.statusCode').should('eq', 200);
-    }
+  projectNames = () => cy.get("tbody tr td:nth-child(2) a.orange");
 
-    getFirstProjectName() {
-        return this.projectNames().eq(0).invoke('text');
-    }
+  clickFirstProjectName() {
+    cy.intercept("POST", "/api/Projects/project").as("projectDetails");
+    cy.intercept("POST", "/api/Projects/projectDoctrine").as("projectDoctrine");
+    this.projectNames().eq(0).click();
+    cy.wait("@projectDoctrine").its("response.statusCode").should("eq", 200);
+    cy.wait("@projectDetails").its("response.statusCode").should("eq", 200);
+  }
 
-    verifyProjectAppearsInTable(projectName) {
-        this.projectNames(projectName)
-            .should('be.visible')
-            .and('contain.text', projectName);
-    }
+  getFirstProjectName() {
+    return this.projectNames().eq(0).invoke("text");
+  }
 
-    selectFirstProject(){
-        ProjectsCommon.selectProjectByIndex(0);
-    }
+  verifyProjectAppearsInTable(projectName) {
+    this.projectNames(projectName)
+      .should("be.visible")
+      .and("contain.text", projectName);
+  }
 
-    archiveProjects(){
-        cy.selectAction('trash');
-        cy.confirmAction('Yes');
-    }
+  selectFirstProject() {
+    ProjectsCommon.selectProjectByIndex(0);
+  }
 
-    exportCSVData(){
-        cy.intercept('GET', /\/api\/Projects\/fields_list\?.*/).as('fieldsList');
+  archiveProjects() {
+    cy.selectAction("trash");
+    cy.confirmAction("Yes");
+  }
 
-        this.exportCsvButtons().eq(1).click();    
-        cy.wait('@fieldsList').its('response.statusCode').should('eq', 200);
-        this.exportModal().should('be.visible');
+  exportCSVData() {
+    cy.intercept("GET", /\/api\/Projects\/fields_list\?.*/).as("fieldsList");
 
-        this.selectExportSubjects().click();
-        this.selectExportOption().contains(' Start date ').click();
-        this.btnSave().click();
+    this.exportCsvButtons().eq(1).click();
+    cy.wait("@fieldsList").its("response.statusCode").should("eq", 200);
+    this.exportModal().should("be.visible");
 
-        cy.readFile('cypress/downloads/export.csv').should('exist');
-        cy.readFile('cypress/downloads/export.csv').should('contain', 'Project;Site;Task');
+    this.selectExportSubjects().click();
+    this.selectExportOption().contains(" Start date ").click();
+    this.btnSave().click();
 
-        this.btnCancel().click();
-        this.exportModal().should('not.be.visible');
-    }
+    cy.readFile("cypress/downloads/export.csv").should("exist");
+    cy.readFile("cypress/downloads/export.csv").should(
+      "contain",
+      "Project;Site;Task"
+    );
 
-    clearProjectsSearch() {
-        this.btnClearSearch().click();
-        // Future Investigation:
-        // In the HTML, the entered text that's visible on the UI isn't appearing. The below should be the right way, but it passes even if there is text in the field, so we need to investigate.
-        // cy.get('[placeholder="Search"]').should('have.text', '');
-    }
+    this.btnCancel().click();
+    this.exportModal().should("not.be.visible");
+  }
 }

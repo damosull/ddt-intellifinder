@@ -12,10 +12,24 @@ export class ProjectDetailsPage {
   toastProjectTasksCreated = () =>
     cy.get(".toast-text").contains("New task is created successfully.");
 
+  openProjectInformationPopup() {
+    this.btnProjectInformation().click();
+  }
+
+  openAddTaskPopup() {
+    this.btnAddTask().click();
+  }
+
   openEditProjectPage() {
     cy.intercept("POST", "/api/Projects/project").as("editProject");
     this.btnEditProject().click();
 
     cy.wait("@editProject").its("response.statusCode").should("eq", 200);
+  }
+
+  verifyProjectTitle(projectName) {
+    this.txtProjectTitle()
+      .should("be.visible")
+      .and("contain.text", projectName);
   }
 }

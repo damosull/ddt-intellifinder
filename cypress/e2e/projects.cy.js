@@ -12,6 +12,7 @@ import { ProjectDetailsPage } from "../support/pom/projects/ProjectDetails.page.
 import { EditProjectPage } from "../support/pom/projects/EditProject.page.js";
 import { ProjectInformationPopup } from "../support/pom/projects/ProjectInformationPopup.page.js";
 import { AddTaskPopup } from "../support/pom/projects/AddTaskPopup.page.js";
+import { ProjectsCommon } from "../support/pom/projects/ProjectsCommon.page.js";
 
 describe("Projects Test Suite", () => {
   const loginPage = new LoginPage();
@@ -29,13 +30,8 @@ describe("Projects Test Suite", () => {
   const addTaskPopup = new AddTaskPopup();
 
   const timeStamp = new Date().getTime();
-  const testText = "test";
+  const projectDescription = "test";
   const searchName = "Cypress Created Name";
-  const sortedIconAsc = '[class="fooicon fooicon-sort-asc"]';
-  const sortedIconDesc = '[class="fooicon fooicon-sort-desc"]';
-  const columnSubjectIndex = 0;
-  const columnStartDateIndex = 1;
-  const columnEndDateIndex = 2;
   const taskName = "Cypress Created Task";
 
   deleteDownloadsFolderBeforeEach();
@@ -45,146 +41,148 @@ describe("Projects Test Suite", () => {
     loginPage.login();
   });
 
-  it("CSV Export", () => {
-    sideMenuPage.openProjectsPage();
-    projectsPage.exportCSVData();
+  describe("Projects List Page", () => {
+    it("CSV Export", () => {
+      sideMenuPage.openProjectsPage();
+      projectsPage.exportCSVData();
+      // TODO: Investigate the CSV file content is as expected
+    });
+
+    // TODO: Future investigation: Review below 3 Sorting tests. Refactor & move functionality to ProjectsPage()
+    it("Sort by Subject column", () => {
+      sideMenuPage.openProjectsPage();
+      sortProjectsPage.sortSubject();
+    });
+
+    it("Sort by Start Date column", () => {
+      sideMenuPage.openProjectsPage();
+      sortProjectsPage.sortStartDate();
+    });
+
+    it("Sort by End Date column", () => {
+      sideMenuPage.openProjectsPage();
+      sortProjectsPage.sortEndDate();
+    });
+
+    it.skip("Pagination", () => {
+      sideMenuPage.openProjectsPage();
+      // TODO: projectsPage.checkPagination();
+    });
+
+    it("Create, Search & Archive a Project via Projects List page", () => {
+      const projectName = `Cypress Created Name - ${timeStamp}`;
+      sideMenuPage.openProjectsPage();
+      createProjectsPage.createNewProject(
+        projectName,
+        timeStamp,
+        projectDescription
+      );
+      ProjectsCommon.searchProjects(projectName);
+      projectsPage.verifyProjectAppearsInTable(projectName);
+      projectsPage.selectFirstProject();
+      projectsPage.archiveProjects();
+      ProjectsCommon.clearProjectsSearch();
+      // TODO: In archiveProjects() above, API response is validated, but we need to verify on the UI as well
+    });
   });
 
-  it.only("Sort all columns on the Projects List page", () => {
-    sideMenuPage.openProjectsPage();
-    //initiate 'Subject' sorting check that it is acceding order
-    sortProjectsPage.sortSubject(
-      sortedIconAsc,
-      sortedIconDesc,
-      columnSubjectIndex
-    );
-    //initiate 'Start Date' sorting check that it is acceding order
-    // sortProjectsPage.sortStartDate(
-    //   sortedIconAsc,
-    //   sortedIconDesc,
-    //   columnStartDateIndex
-    // );
-    // //initiate 'End Date' sorting check that it is acceding order
-    // sortProjectsPage.sortEndDate(
-    //   sortedIconAsc,
-    //   sortedIconDesc,
-    //   columnEndDateIndex
-    // );
+  describe("Archived Projects Page", () => {
+    it("Trash Project", () => {
+      sideMenuPage.openProjectsArchivePage();
+      ProjectsCommon.searchProjects(searchName);
+      archiveProjectsPage.selectMultipleProjects(3);
+      archiveProjectsPage.trashProjects();
+      // TODO: In trashProjects() above, API response is validated, but we need to verify on the UI as well
+    });
+
+    it("Restore Project", () => {
+      sideMenuPage.openProjectsArchivePage();
+      archiveProjectsPage.selectArchivedProject();
+      trashedProjectsPage.restoreProject();
+      // TODO: In restoreProject() above, API response is validated, but we need to verify on the UI as well
+    });
   });
 
-  it("Pagination", () => {
-    sideMenuPage.openProjectsPage();
-    // projectsPage.checkPagination();
+  describe("Trashed Projects Page", () => {
+    it("Restore Project", () => {
+      sideMenuPage.openProjectsTrashPage();
+      ProjectsCommon.searchProjects(searchName);
+      trashedProjectsPage.selectTrashedProject();
+      trashedProjectsPage.restoreProject();
+      // TODO: In restoreProject() above, API response is validated, but we need to verify on the UI as well
+    });
+
+    it("Archive Project", () => {
+      sideMenuPage.openProjectsTrashPage();
+      ProjectsCommon.searchProjects(searchName);
+      trashedProjectsPage.selectTrashedProject();
+      trashedProjectsPage.archiveProjects();
+      // TODO: In archiveProjects() above, API response is validated, but we need to verify on the UI as well
+    });
+
+    it("Delete Project", () => {
+      sideMenuPage.openProjectsTrashPage();
+      ProjectsCommon.searchProjects(searchName);
+      trashedProjectsPage.selectTrashedProject();
+      trashedProjectsPage.deleteProject();
+      // TODO: In deleteProject() above, API response is validated, but we need to verify on the UI as well
+    });
   });
 
-  //main project page actions
-  it("Create, Search & Archive a Project via Projects List page", () => {
-    const projectName = `Cypress Created Name - ${timeStamp}`;
-    sideMenuPage.openProjectsPage();
-    createProjectsPage.createNewProject(projectName, timeStamp, testText);
-    projectsPage.searchProjects(projectName);
-    projectsPage.verifyProjectAppearsInTable(projectName);
-    projectsPage.selectFirstProject();
-    projectsPage.archiveProjects();
-    projectsPage.clearProjectsSearch();
-  });
+  describe("Project Details", () => {
+    it("Verify Project Page Title", () => {
+      sideMenuPage.openProjectsPage();
+      ProjectsCommon.searchProjects(searchName);
+      projectsPage.getFirstProjectName().then((projectName) => {
+        projectsPage.clickFirstProjectName();
+        projectDetailsPage.verifyProjectTitle(projectName);
+      });
+    });
 
-  // THIS TEST IS FULLY REFACTORED
-  it("Trash Project via Archived Projects page", () => {
-    sideMenuPage.openProjectsArchivePage();
-    projectsPage.searchProjects(searchName);
-    archiveProjectsPage.selectMultipleProjects(3);
-    archiveProjectsPage.trashProjects();
-  });
+    it("Verify Project Information Pop Up", () => {
+      sideMenuPage.openProjectsPage();
+      ProjectsCommon.searchProjects(searchName);
+      projectsPage.getFirstProjectName().then((projectName) => {
+        projectsPage.clickFirstProjectName();
+        projectDetailsPage.openProjectInformationPopup();
+        projectInformationPopup.verifyProjectInformation(projectName);
+        // TODO: In above, we need to verify more info if possible via the UI
+      });
+    });
 
-  // THIS TEST IS FULLY REFACTORED
-  it("Restore Project via Archived Projects page", () => {
-    sideMenuPage.openProjectsArchivePage();
-    archiveProjectsPage.selectArchivedProject();
-    trashedProjectsPage.restoreProject();
-    projectsPage.clearProjectsSearch();
-  });
-
-  //trashed projects page
-  // THIS TEST IS FULLY REFACTORED
-  it("Restore Project via Trashed Projects page", () => {
-    sideMenuPage.openProjectsTrashPage();
-    projectsPage.searchProjects(searchName);
-    trashedProjectsPage.selectTrashedProject();
-    trashedProjectsPage.restoreProject();
-    projectsPage.clearProjectsSearch();
-  });
-
-  // THIS TEST IS FULLY REFACTORED
-  it("Archive Project via Trashed Projects page", () => {
-    sideMenuPage.openProjectsTrashPage();
-    projectsPage.searchProjects(searchName);
-    trashedProjectsPage.selectTrashedProject();
-    trashedProjectsPage.archiveProjects();
-    projectsPage.clearProjectsSearch();
-  });
-
-  // THIS TEST IS FULLY REFACTORED
-  it("Delete Project via Trashed Projects page", () => {
-    sideMenuPage.openProjectsTrashPage();
-    projectsPage.searchProjects(searchName);
-    trashedProjectsPage.selectTrashedProject();
-    trashedProjectsPage.deleteProject();
-    projectsPage.clearProjectsSearch();
-  });
-
-  it("Verify Project Page Title", () => {
-    sideMenuPage.openProjectsPage();
-    projectsPage.searchProjects(searchName);
-    projectsPage.getFirstProjectName().then((projectName) => {
+    it.only("Add task to project using only required fields", () => {
+      sideMenuPage.openProjectsPage();
+      ProjectsCommon.searchProjects(searchName);
       projectsPage.clickFirstProjectName();
-      projectDetailsPage
-        .txtProjectTitle()
+      projectDetailsPage.openAddTaskPopup();
+      addTaskPopup.verifyPopupIsOpen();
+      addTaskPopup.createTaskWithOnlyRequiredFields(taskName, timeStamp);
+      // TODO: We also need to search for the project and verify the updates were made via the UI
+    });
+
+    it.only("Add task to project using additional fields", () => {
+      sideMenuPage.openProjectsPage();
+      ProjectsCommon.searchProjects(searchName);
+      projectsPage.clickFirstProjectName();
+      projectDetailsPage.openAddTaskPopup();
+      addTaskPopup.verifyPopupIsOpen();
+      addTaskPopup.createTaskWithRequiredFields(taskName, timeStamp);
+      // TODO: Add more fields as part of this test
+      // TODO: We also need to search for the project and verify the updates were made via the UI
+    });
+
+    it("Edit a Project", () => {
+      sideMenuPage.openProjectsPage();
+      ProjectsCommon.searchProjects(searchName);
+      projectsPage.clickFirstProjectName();
+      projectDetailsPage.openEditProjectPage();
+      editProjectPage
+        .header()
         .should("be.visible")
-        .and("contain.text", projectName);
+        .and("have.text", "Edit project");
+      editProjectPage.editProject("updated name");
+      // TODO: In above 'editProject', we need to update more fields as part of this test
+      // TODO: We also need to search for the project and verify the updates were made via the UI
     });
-  });
-
-  it("Verify Project Information Pop Up", () => {
-    sideMenuPage.openProjectsPage();
-    projectsPage.searchProjects(searchName);
-    projectsPage.getFirstProjectName().then((projectName) => {
-      projectsPage.clickFirstProjectName();
-      projectDetailsPage.btnProjectInformation().click();
-      projectInformationPopup.verifyProjectInformation(projectName);
-    });
-  });
-
-  it("Add task to project using only required fields", () => {
-    sideMenuPage.openProjectsPage();
-    projectsPage.searchProjects(searchName);
-    projectsPage.clickFirstProjectName();
-    projectDetailsPage.btnAddTask().click(); // open function?
-    addTaskPopup.header().should("be.visible").and("contain.text", "Add task");
-    addTaskPopup.createTaskWithOnlyRequiredFields(taskName, timeStamp);
-  });
-
-  it("Add task to project using additional fields", () => {
-    sideMenuPage.openProjectsPage();
-    projectsPage.searchProjects(searchName);
-    projectsPage.clickFirstProjectName();
-    projectDetailsPage.btnAddTask().click();
-    addTaskPopup.header().should("be.visible").and("contain.text", "Add task");
-    addTaskPopup.createTaskWithRequiredFields(taskName, timeStamp);
-    // TODO: Add more fields as part of this test
-  });
-
-  it("Edit a Project", () => {
-    sideMenuPage.openProjectsPage();
-    projectsPage.searchProjects(searchName);
-    projectsPage.clickFirstProjectName();
-    projectDetailsPage.openEditProjectPage();
-    editProjectPage
-      .header()
-      .should("be.visible")
-      .and("have.text", "Edit project");
-    editProjectPage.editProject("updated name");
-    // TODO: In above 'editProject', we need to update more fields as part of this test
-    // TODO: We also need to search for the project and verify the updates were made via the UI
   });
 });

@@ -1,4 +1,10 @@
 export class SortProjectsPage {
+  ICON_ASC = '[class="fooicon fooicon-sort-asc"]';
+  ICON_DESC = '[class="fooicon fooicon-sort-desc"]';
+  COLUMN_SUBJECT = 0;
+  COLUMN_START_DATE = 1;
+  COLUMN_END_DATE = 2;
+
   sltDataTable = () =>
     cy.get(
       '[class="table modern-table footable footable-1 footable-filtering footable-filtering-right footable-paging footable-paging-center breakpoint-md"]'
@@ -25,28 +31,28 @@ export class SortProjectsPage {
     this.btnSorTableEndDate().find(sortedIcon).should("be.visible");
   }
 
-  sortSubject(sortedIconAsc, sortedIconDesc, column) {
-    this.tableSubject(sortedIconAsc);
-    this.sortedDateDataAscending(column); // Iterate over each row and extract the 2nd column (index 1 etc.)
+  sortSubject() {
+    this.tableSubject(this.ICON_ASC);
+    this.sortedDateDataAscending(this.COLUMN_SUBJECT);
 
-    this.tableSubject(sortedIconDesc);
-    this.sortedDateDataDescending(column);
+    this.tableSubject(this.ICON_DESC);
+    this.sortedDateDataDescending(this.COLUMN_SUBJECT);
   }
 
-  sortStartDate(sortedIconAsc, sortedIconDesc, column) {
-    this.tableStartDate(sortedIconAsc);
-    this.sortedDateDataAscending(column);
+  sortStartDate() {
+    this.tableStartDate(this.ICON_ASC);
+    this.sortedDateDataAscending(this.COLUMN_START_DATE);
 
-    this.tableStartDate(sortedIconDesc);
-    this.sortedDateDataDescending(column);
+    this.tableStartDate(this.ICON_DESC);
+    this.sortedDateDataDescending(this.COLUMN_START_DATE);
   }
 
-  sortEndDate(sortedIconAsc, sortedIconDesc, column) {
-    this.tableEndDate(sortedIconAsc);
-    this.sortedDateDataAscending(column);
+  sortEndDate() {
+    this.tableEndDate(this.ICON_ASC);
+    this.sortedDateDataAscending(this.COLUMN_END_DATE);
 
-    this.tableEndDate(sortedIconDesc);
-    this.sortedDateDataDescending(column);
+    this.tableEndDate(this.ICON_DESC);
+    this.sortedDateDataDescending(this.COLUMN_END_DATE);
   }
 
   sortedDateDataAscending(column) {

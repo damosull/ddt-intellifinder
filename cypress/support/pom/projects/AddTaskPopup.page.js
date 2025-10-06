@@ -10,6 +10,10 @@ export class AddTaskPopup {
   txtRefNumber = () => cy.get('[placeholder="Ref. number"]');
   btnSave = () => cy.get('[class="btn btn-success active mat-flat-button"]');
 
+  verifyPopupIsOpen() {
+    this.header().should("be.visible").and("contain.text", "Add task");
+  }
+
   createTaskWithRequiredFields(taskName, timeStamp) {
     this.txtSubjectName().type(taskName + timeStamp + "{enter}");
     this.sltSite().click();
