@@ -30,3 +30,21 @@ Cypress.Commands.add('extractDistance', (text) => {
     const match = text.match(regex);
     return match ? parseFloat(match[1]) : null;
 });
+
+Cypress.Commands.add('selectAction', (actionType, selector = 'select.actionsList') => {
+    cy.get(selector)
+        .should('be.visible')
+        .select(actionType)
+        .should('have.value', actionType);
+});
+
+Cypress.Commands.add('confirmAction', (decision) => {
+    cy.intercept('PUT', '/api/Projects/save_projects').as('saveRequest');
+    cy.intercept('POST', '/api/Projects/projects_with_type').as('allProjects');
+    
+    cy.get('.swal-title').should('be.visible');
+    cy.contains(decision).click();
+    
+    cy.wait('@saveRequest').its('response.statusCode').should('eq', 200);
+    cy.wait('@allProjects').its('response.statusCode').should('eq', 200);
+});

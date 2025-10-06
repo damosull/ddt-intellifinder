@@ -66,10 +66,8 @@ describe('MultiSites Test Suite', () => {
       updateMultiSitesPage.addNewPlanDrawing();
       updateMultiSitesPage.editPlanDrawing();
       updateMultiSitesPage.deletePlanDrawing();
+      
+      addSubSitePage.addSubSite();
 
-      addSubSitePage.sltSubSite();
-      addSubSitePage.addPSubSite();
-  
   });
-
 })

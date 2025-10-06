@@ -1,5 +1,7 @@
 const { defineConfig } = require('cypress');
 const mochawesomeReporter = require('cypress-mochawesome-reporter/plugin');
+const { removeDirectory } = require('cypress-delete-downloads-folder');
+
 
 module.exports = defineConfig({
   reporter: 'cypress-mochawesome-reporter',
@@ -15,6 +17,8 @@ module.exports = defineConfig({
     setupNodeEvents(on, config) {
       // implement node event listeners here
       mochawesomeReporter(on);
+      on('task', { removeDirectory });
+
       return config;
     },
     screenshotOnRunFailure: true,

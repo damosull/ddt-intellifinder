@@ -31,17 +31,20 @@ export class SideMenuPage {
         this.navbarToggle().click();
         this.projectsLink().click();
         this.viewAllProjectsLink().click();
+        cy.url().should('include', '/projects/list-projects/latest');
     }
 
     openProjectsArchivePage() {
         this.navbarToggle().click();
         this.projectsLink().click();
         this.viewArchivedProjectsLink().click();
+        cy.url().should('include', '/projects/list-projects/archive');
     }
 
     openProjectsTrashPage() {
         this.navbarToggle().click();
         this.projectsLink().click();
         this.viewTrashedProjectsLink().click();
+        cy.url().should('include', '/projects/list-projects/trash');
     }
 }

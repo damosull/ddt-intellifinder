@@ -1,97 +1,88 @@
 export class SortProjectsPage {
+  sltDataTable = () =>
+    cy.get(
+      '[class="table modern-table footable footable-1 footable-filtering footable-filtering-right footable-paging footable-paging-center breakpoint-md"]'
+    );
 
-    sltDataTable = () => cy.get('[class="table modern-table footable footable-1 footable-filtering footable-filtering-right footable-paging footable-paging-center breakpoint-md"]');
+  btnSorTableSubject = () => cy.get('th:contains("Subject")');
+  btnSorTableStartDate = () => cy.get('th:contains("Start date")');
+  btnSorTableEndDate = () => cy.get('th:contains("End date")');
 
-    btnSorTableSubject = () => cy.get('th:contains("Subject")');
-    btnSorTableStartDate = () => cy.get('th:contains("Start date")');
-    btnSorTableEndDate = () => cy.get('th:contains("End date")');
+  btnStartIcon = () => cy.get('[class="fooicon fooicon-sort"]'); // start icon before sorting
 
-    btnStartIcon = () => cy.get('[class="fooicon fooicon-sort"]'); // start icon before sorting
+  tableSubject(sortedIcon) {
+    this.btnSorTableSubject().click();
+    this.btnSorTableSubject().find(sortedIcon).should("be.visible");
+  }
 
-    tableSubject(sortedIcon){
-        cy.wait(2000);
-        this.btnSorTableSubject().click();
+  tableStartDate(sortedIcon) {
+    this.btnSorTableStartDate().click();
+    this.btnSorTableStartDate().find(sortedIcon).should("be.visible");
+  }
 
-        cy.wait(500);
-        this.btnSorTableSubject().find(sortedIcon).should('be.visible');
-    }
+  tableEndDate(sortedIcon) {
+    this.btnSorTableEndDate().click();
+    this.btnSorTableEndDate().find(sortedIcon).should("be.visible");
+  }
 
-    tableStartDate(sortedIcon){
-        cy.wait(2000);
-        this.btnSorTableStartDate().click();
+  sortSubject(sortedIconAsc, sortedIconDesc, column) {
+    this.tableSubject(sortedIconAsc);
+    this.sortedDateDataAscending(column); // Iterate over each row and extract the 2nd column (index 1 etc.)
 
-        cy.wait(500);
-        this.btnSorTableStartDate().find(sortedIcon).should('be.visible');
+    this.tableSubject(sortedIconDesc);
+    this.sortedDateDataDescending(column);
+  }
 
-    }
+  sortStartDate(sortedIconAsc, sortedIconDesc, column) {
+    this.tableStartDate(sortedIconAsc);
+    this.sortedDateDataAscending(column);
 
-    tableEndDate(sortedIcon){
-        cy.wait(2000);
-        this.btnSorTableEndDate().click();
+    this.tableStartDate(sortedIconDesc);
+    this.sortedDateDataDescending(column);
+  }
 
-        cy.wait(500);
-        this.btnSorTableEndDate().find(sortedIcon).should('be.visible');
+  sortEndDate(sortedIconAsc, sortedIconDesc, column) {
+    this.tableEndDate(sortedIconAsc);
+    this.sortedDateDataAscending(column);
 
-    }
+    this.tableEndDate(sortedIconDesc);
+    this.sortedDateDataDescending(column);
+  }
 
-    sortSubject(sortedIconAsc, sortedIconDesc, column){
-        this.tableSubject(sortedIconAsc);
-        this.sortedDateDataAscending(column); // Iterate over each row and extract the 2nd column (index 1 etc.)
-
-        this.tableSubject(sortedIconDesc);
-        this.sortedDateDataDescending(column);
-    }
-
-    sortStartDate(sortedIconAsc, sortedIconDesc, column){
-        this.tableStartDate(sortedIconAsc);
-        this.sortedDateDataAscending(column);
-
-        this.tableStartDate(sortedIconDesc);
-        this.sortedDateDataDescending(column);
-    }
-
-    sortEndDate(sortedIconAsc, sortedIconDesc, column){
-        this.tableEndDate(sortedIconAsc);
-        this.sortedDateDataAscending(column);
-
-        this.tableEndDate(sortedIconDesc);
-        this.sortedDateDataDescending(column);
-    }
-
-    sortedDateDataAscending(column) {
-      const dates = [];
-        this.sltDataTable().find('tbody > tr:visible').then((rows) => {
-          Cypress.$(rows).each((index, row) => {
-            const cellText = Cypress.$(row).find('td').eq(column).text().trim();
-            //expect(cellText).to.increase(row, 'val');
-            const date = new Date(cellText);
-            if (!isNaN(date)) { dates.push(date);}
-            });
-            console.log(dates);
-        
-            // expect(dates).to.be.strictly.increasing;
-          const sorted = [...dates].sort((a, b) => a - b);
-          console.log(sorted);
-          expect(dates).to.deep.equal(sorted);
+  sortedDateDataAscending(column) {
+    const dates = [];
+    this.sltDataTable()
+      .find("tbody > tr:visible")
+      .then((rows) => {
+        Cypress.$(rows).each((index, row) => {
+          const cellText = Cypress.$(row).find("td").eq(column).text().trim();
+          //expect(cellText).to.increase(row, 'val');
+          const date = new Date(cellText);
+          if (!isNaN(date)) {
+            dates.push(date);
+          }
         });
 
-      }
-   
-    sortedDateDataDescending(column){
-      const dates = [];
-        this.sltDataTable().find('tbody > tr:visible').then((rows) => {
-           
-            Cypress.$(rows).each((index, row) => {
-              const cellText = Cypress.$(row).find('td').eq(column).text().trim();
-              const date = new Date(cellText);
-              if (!isNaN(date)) { dates.push(date);}
-            });
-            console.log(dates);
-        
-            const sorted = [...dates].sort((a, b) => b - a);
-            console.log(sorted);
-            expect(dates).to.deep.equal(sorted);
-          });
-    }
+        const sorted = [...dates].sort((a, b) => a - b);
+        expect(dates).to.deep.equal(sorted);
+      });
+  }
 
+  sortedDateDataDescending(column) {
+    const dates = [];
+    this.sltDataTable()
+      .find("tbody > tr:visible")
+      .then((rows) => {
+        Cypress.$(rows).each((index, row) => {
+          const cellText = Cypress.$(row).find("td").eq(column).text().trim();
+          const date = new Date(cellText);
+          if (!isNaN(date)) {
+            dates.push(date);
+          }
+        });
+
+        const sorted = [...dates].sort((a, b) => b - a);
+        expect(dates).to.deep.equal(sorted);
+      });
+  }
 }
