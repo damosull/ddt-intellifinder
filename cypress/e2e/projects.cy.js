@@ -45,28 +45,36 @@ describe("Projects Test Suite", () => {
     it("CSV Export", () => {
       sideMenuPage.openProjectsPage();
       projectsPage.exportCSVData();
-      // TODO: Investigate the CSV file content is as expected
+
+      // IMPROVEMENT: Investigate the CSV file content is as expected
     });
 
-    // TODO: Future investigation: Review below 3 Sorting tests. Refactor & move functionality to ProjectsPage()
     it("Sort by Subject column", () => {
       sideMenuPage.openProjectsPage();
       sortProjectsPage.sortSubject();
+
+      // IMPROVEMENT: Investigate this test, refactor & move functionality to ProjectsPage()
     });
 
     it("Sort by Start Date column", () => {
       sideMenuPage.openProjectsPage();
       sortProjectsPage.sortStartDate();
+
+      // IMPROVEMENT: Investigate this test, refactor & move functionality to ProjectsPage()
     });
 
     it("Sort by End Date column", () => {
       sideMenuPage.openProjectsPage();
       sortProjectsPage.sortEndDate();
+
+      // FAILURE - need to investigate
+      // IMPROVEMENT: Investigate this test, refactor & move functionality to ProjectsPage()
     });
 
     it.skip("Pagination", () => {
       sideMenuPage.openProjectsPage();
-      // TODO: projectsPage.checkPagination();
+
+      // IMPROVEMENT: Add steps to test projectsPage.checkPagination();
     });
 
     it("Create, Search & Archive a Project via Projects List page", () => {
@@ -82,7 +90,8 @@ describe("Projects Test Suite", () => {
       projectsPage.selectFirstProject();
       projectsPage.archiveProjects();
       ProjectsCommon.clearProjectsSearch();
-      // TODO: In archiveProjects() above, API response is validated, but we need to verify on the UI as well
+
+      // IMPROVEMENT: In 'archiveProjects' above, API response is validated, but we need to verify on the UI as well
     });
   });
 
@@ -92,14 +101,14 @@ describe("Projects Test Suite", () => {
       ProjectsCommon.searchProjects(searchName);
       archiveProjectsPage.selectMultipleProjects(3);
       archiveProjectsPage.trashProjects();
-      // TODO: In trashProjects() above, API response is validated, but we need to verify on the UI as well
+      // IMPROVEMENT: In 'trashProjects' above, API response is validated, but we need to verify on the UI as well
     });
 
     it("Restore Project", () => {
       sideMenuPage.openProjectsArchivePage();
       archiveProjectsPage.selectArchivedProject();
       trashedProjectsPage.restoreProject();
-      // TODO: In restoreProject() above, API response is validated, but we need to verify on the UI as well
+      // IMPROVEMENT: In 'restoreProject' above, API response is validated, but we need to verify on the UI as well
     });
   });
 
@@ -109,7 +118,8 @@ describe("Projects Test Suite", () => {
       ProjectsCommon.searchProjects(searchName);
       trashedProjectsPage.selectTrashedProject();
       trashedProjectsPage.restoreProject();
-      // TODO: In restoreProject() above, API response is validated, but we need to verify on the UI as well
+
+      // IMPROVEMENT: In 'restoreProject' above, API response is validated, but we need to verify on the UI as well
     });
 
     it("Archive Project", () => {
@@ -117,7 +127,8 @@ describe("Projects Test Suite", () => {
       ProjectsCommon.searchProjects(searchName);
       trashedProjectsPage.selectTrashedProject();
       trashedProjectsPage.archiveProjects();
-      // TODO: In archiveProjects() above, API response is validated, but we need to verify on the UI as well
+
+      // IMPROVEMENT: In archiveProjects() above, API response is validated, but we need to verify on the UI as well
     });
 
     it("Delete Project", () => {
@@ -125,7 +136,8 @@ describe("Projects Test Suite", () => {
       ProjectsCommon.searchProjects(searchName);
       trashedProjectsPage.selectTrashedProject();
       trashedProjectsPage.deleteProject();
-      // TODO: In deleteProject() above, API response is validated, but we need to verify on the UI as well
+
+      // IMPROVEMENT: In 'deleteProject' above, API response is validated, but we need to verify on the UI as well
     });
   });
 
@@ -146,29 +158,34 @@ describe("Projects Test Suite", () => {
         projectsPage.clickFirstProjectName();
         projectDetailsPage.openProjectInformationPopup();
         projectInformationPopup.verifyProjectInformation(projectName);
-        // TODO: In above, we need to verify more info if possible via the UI
+
+        // IMPROVEMENT: In 'verifyProjectInformation', we need to verify more info if possible via the UI
       });
     });
 
-    it.only("Add task to project using only required fields", () => {
+    it("Add task to project using only required fields", () => {
       sideMenuPage.openProjectsPage();
       ProjectsCommon.searchProjects(searchName);
       projectsPage.clickFirstProjectName();
       projectDetailsPage.openAddTaskPopup();
       addTaskPopup.verifyPopupIsOpen();
       addTaskPopup.createTaskWithOnlyRequiredFields(taskName, timeStamp);
-      // TODO: We also need to search for the project and verify the updates were made via the UI
+
+      // FAILURE: Test fails when we try to add a task. To add a task, we need to select a 'Site', but I don't know what to search for
+      // IMPROVEMENT: We also need to search for the project and verify the updates were made via the UI
     });
 
-    it.only("Add task to project using additional fields", () => {
+    it("Add task to project using additional fields", () => {
       sideMenuPage.openProjectsPage();
       ProjectsCommon.searchProjects(searchName);
       projectsPage.clickFirstProjectName();
       projectDetailsPage.openAddTaskPopup();
       addTaskPopup.verifyPopupIsOpen();
       addTaskPopup.createTaskWithRequiredFields(taskName, timeStamp);
-      // TODO: Add more fields as part of this test
-      // TODO: We also need to search for the project and verify the updates were made via the UI
+
+      // FAILURE: Test fails when we try to add a task. To add a task, we need to select a 'Site', but I don't know what to search for
+      // IMPROVEMENT: Add more fields as part of this test
+      // IMPROVEMENT: We also need to search for the project and verify the updates were made via the UI
     });
 
     it("Edit a Project", () => {
@@ -181,8 +198,9 @@ describe("Projects Test Suite", () => {
         .should("be.visible")
         .and("have.text", "Edit project");
       editProjectPage.editProject("updated name");
-      // TODO: In above 'editProject', we need to update more fields as part of this test
-      // TODO: We also need to search for the project and verify the updates were made via the UI
+
+      // IMPROVEMENT: In above 'editProject', we need to update more fields as part of this test
+      // IMPROVEMENT: We need to search for the project and verify the updates were made via the UI
     });
   });
 });

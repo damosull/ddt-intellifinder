@@ -19,7 +19,7 @@ export class LoginPage {
         cy.contains("Yes", { timeout: 40000 }).should("be.enabled").click();
       }
     });
-
+    cy.url().should("include", "/dashboard");
     cy.get("h2", { timeout: 30000 }).should("have.text", "Overview");
   }
 }

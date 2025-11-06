@@ -1,33 +1,27 @@
 import { ProjectsCommon } from "./ProjectsCommon.page.js";
 
 export class ProjectsPage {
-  txtSearch = () => cy.get('[type="text"][placeholder="Search"]');
-
-  chkSelectProject = () => cy.get(".projectCB");
-
-  confirmationTitle = () => cy.get(".swal-title").contains("Are you sure?");
-
-  sltActions = () => cy.get(".actionsList");
-
   exportCsvButtons = () => cy.get('[title="Export task data"]');
   exportModal = () => cy.get("#exportTasksDataModal");
 
   selectExportSubjects = () => cy.get(".selection");
   selectExportOption = () => cy.get(".select2-results__options");
-
   btnSave = () => cy.get('[title="Save"]');
   btnCancel = () => cy.get('[title="Cancel"]');
 
-  paginationLabel = () => cy.get(".label label-default");
-  sltPaginationOptions = () => cy.get('[data-dashlane-rid="aea5cb3f64cb7861"]');
-
   projectNames = () => cy.get("tbody tr td:nth-child(2) a.orange");
+
+  pageLoaded() {
+    cy.url().should("include", "/projects/list-projects/latest");
+  }
 
   clickFirstProjectName() {
     cy.intercept("POST", "/api/Projects/project").as("projectDetails");
     cy.intercept("POST", "/api/Projects/projectDoctrine").as("projectDoctrine");
     this.projectNames().eq(0).click();
-    cy.wait("@projectDoctrine").its("response.statusCode").should("eq", 200);
+    cy.wait("@projectDoctrine", { timeout: 30000 })
+      .its("response.statusCode")
+      .should("eq", 200);
     cy.wait("@projectDetails").its("response.statusCode").should("eq", 200);
   }
 

@@ -8,59 +8,66 @@ import { DeleteSitePage } from "../support/pom/sites/DeleteSite.page";
 import { SitesPage } from "../support/pom/sites/Sites.page";
 import { SitesMapPage } from "../support/pom/sites/SitesMap.page";
 import { SitesNearestPage } from "../support/pom/sites/SitesNearest.page";
+import { BreadCrumbPage } from "../support/pom/BreadCrumb.page";
 
-describe('Sites Test Suite', () => {
-    const loginPage = new LoginPage();
-    const sideMenuPage = new SideMenuPage();
+describe("Sites Test Suite", () => {
+  const loginPage = new LoginPage();
+  const sideMenuPage = new SideMenuPage();
 
-    const createSitePage = new CreateSitePage();
-    const updateSitePage = new UpdateSitePage();
-    const deleteSitePage = new DeleteSitePage();
-    const sitePage = new SitesPage();
-    const sitesMapPage = new SitesMapPage();
-    const sitesNearestPage = new SitesNearestPage();
+  const createSitePage = new CreateSitePage();
+  const updateSitePage = new UpdateSitePage();
+  const deleteSitePage = new DeleteSitePage();
+  const sitePage = new SitesPage();
+  const sitesMapPage = new SitesMapPage();
+  const sitesNearestPage = new SitesNearestPage();
+  const breadCrumbPage = new BreadCrumbPage();
+  const timestamp = new Date().getTime();
+  const longitude = -74.005974;
+  const latitude = 40.712776;
 
-    const timestamp = new Date().getTime();
-    const longitude = -74.005974;
-    const latitude = 40.712776;
+  beforeEach(() => {
+    cy.visit("/");
+    loginPage.login();
+    sideMenuPage.openSitesPage();
+  });
 
-    beforeEach(() => {
-        cy.visit('/');
-        loginPage.login();
-        sideMenuPage.openSitesPage();
-    });
+  it("Create & Search Site via Sites List page", () => {
+    const siteName = `Created Name - ${timestamp}`;
+    createSitePage.createSite(siteName, latitude, longitude);
+    sitePage.searchSite(siteName, latitude, longitude);
+  });
 
-    it('Create & Search Site via Sites List page', () => {
-        const siteName = `Created Name - ${timestamp}`;
-        createSitePage.createSite(siteName, latitude, longitude);
-        sitePage.searchSite(siteName, latitude, longitude);
-    })
+  it("Edit Site via Sites List page", () => {
+    const siteName = `Site to be updated - ${timestamp}`;
+    const updatedSiteName = `Updated Site - ${timestamp}`;
+    createSitePage.createSite(siteName, latitude, longitude);
+    let updatedLatitude = 35.689487;
+    let updatedLongitude = 139.691711;
+    breadCrumbPage.sitesBreadcrumb().click();
+    sitePage.searchSite(siteName, latitude, longitude);
+    updateSitePage.updateSite(
+      updatedSiteName,
+      updatedLatitude,
+      updatedLongitude
+    );
+    breadCrumbPage.sitesBreadcrumb().click();
+    sitePage.searchSite(updatedSiteName, updatedLatitude, updatedLongitude);
+  });
 
-    it('Edit Site via Sites List page', () => {
-        const siteName = `Site to be updated - ${timestamp}`;
-        const updatedSiteName = `Updated Site - ${timestamp}`;
-        createSitePage.createSite(siteName, latitude, longitude);
-        let updatedLatitude = 35.689487;
-        let updatedLongitude = 139.691711;
-        sitePage.searchSite(siteName, latitude, longitude);
-        updateSitePage.updateSite(updatedSiteName, updatedLatitude, updatedLongitude)
-        sitePage.searchSite(updatedSiteName, updatedLatitude, updatedLongitude)
-    });
+  it("Delete Site via Sites List page:", () => {
+    const siteName = `Site to be deleted - ${timestamp}`;
+    createSitePage.createSite(siteName, latitude, longitude);
+    sitePage.searchSite(siteName, latitude, longitude);
+    deleteSitePage.deleteSite();
+    sitePage.searchSiteWithNoResults(siteName);
+  });
 
-    it('Delete Site via Sites List page:', () => {
-        const siteName = `Site to be deleted - ${timestamp}`;
-        createSitePage.createSite(siteName, latitude, longitude);
-        sitePage.searchSite(siteName, latitude, longitude);
-        deleteSitePage.deleteSite()
-        sitePage.searchSiteWithNoResults(siteName);
-    });
+  it("Search Sites via Sites list on map", () => {
+    sitesMapPage.openAndVerifySiteData();
+    sitesMapPage.pageTitle().should("be.visible");
+  });
 
-    it('Search Sites via Sites list on map', () => {
-        sitesMapPage.openAndVerifySiteData();
-        sitesMapPage.pageTitle().should('be.visible');
-    });
-
-    it('Search Sites via Sites > Nearest - verify distances are in ascending order', () => {
-        sitesNearestPage.openAndVerifyDistancesInAscendingOrder()
-    });
+  it("Search Sites via Sites > Nearest - verify distances are in ascending order", () => {
+    sitesNearestPage.openAndVerifyDistancesInAscendingOrder();
+  });
 });

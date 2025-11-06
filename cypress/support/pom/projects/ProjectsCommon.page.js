@@ -25,7 +25,7 @@ export class ProjectsCommon {
   }
 
   static searchProjects(projectName) {
-    this.txtSearch().should("be.visible");
+    this.txtSearch().should("be.visible", { timeout: 20000 });
     this.txtSearch().type(projectName + "{enter}");
     cy.wait(1000);
   }
