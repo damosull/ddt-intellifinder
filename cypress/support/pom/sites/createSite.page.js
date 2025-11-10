@@ -16,9 +16,14 @@ export class CreateSitePage {
   txtCategorySearch = () => cy.get('[type="search"]');
   txtCategorySearchOptions = () => cy.get('[role="option"]');
   toastSiteCreated = () => cy.get(".toast-msg").contains("Site created.");
+  locationLoader = () => cy.get("app-geolocation").contains("Getting location");
+
+
 
   createSite(siteName, latitude, longitude) {
     this.btnCreateNewSite().click();
+    
+    
     this.txtSiteName().clear().type(siteName);
     // this.txtLatitude().clear().type(latitude);
     // this.txtLongitude().clear().type(longitude);
@@ -27,6 +32,7 @@ export class CreateSitePage {
     this.txtCategorySearch().type("Default");
     cy.wait("@postRequest").its("response.statusCode").should("eq", 200);
     cy.wait(100);
+    this.locationLoader().should('not.exist');
     this.txtCategorySearchOptions().eq(0).click();
     this.sitePicture().attachFile("testImage.jpg");
     this.txtTelephone().type("1234567");
