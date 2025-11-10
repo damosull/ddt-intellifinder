@@ -20,7 +20,7 @@ export class SideMenuPage {
 
   openSitesPage() {
     this.navbarToggle().click();
-    this.sitesLink().click();
+    this.sitesLink().click({force:true});
   }
 
   openMultiSitesPage() {

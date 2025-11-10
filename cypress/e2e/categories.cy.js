@@ -30,8 +30,10 @@ describe("Categories Test Suite", () => {
     createCategoryPage.createCategory(categoryName);
     categoriesPage.searchCategory(categoryName);
     categoriesPage.verifyCategoryIsVisible(categoryName);
+    categoriesPage.searchCategory(categoryName);
     categoriesPage.clickDeleteButtonForFirstRecord();
     deletePopupPage.confirmDeletion();
+    categoriesPage.searchCategory(categoryName);
     categoriesPage.verifyCategoryDeleted();
   });
 
@@ -45,6 +47,7 @@ describe("Categories Test Suite", () => {
 
   it("Delete Category", () => {
     categoriesPage.getFirstCategoryName().then((categoryName) => {
+      categoriesPage.searchCategory(categoryName);
       categoriesPage.clickDeleteButtonForFirstRecord();
       deletePopupPage.confirmDeletion();
       categoriesPage.searchCategory(categoryName);

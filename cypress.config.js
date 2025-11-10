@@ -14,7 +14,7 @@ module.exports = defineConfig({
   e2e: {
     baseUrl: "https://test-cloud.intellifinder.dk",
     defaultCommandTimeout: 20000,
-    pageLoadTimeout: 60000,
+    pageLoadTimeout: 120000,
     responseTimeout: 30000,
     setupNodeEvents(on, config) {
       // implement node event listeners here

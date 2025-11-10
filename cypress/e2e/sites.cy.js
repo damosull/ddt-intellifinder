@@ -2,7 +2,7 @@
 import { LoginPage } from "../support/pom/Login.page";
 import { SideMenuPage } from "../support/pom/SideMenu.page";
 
-import { CreateSitePage } from "../support/pom/sites/CreateSite.page";
+import { CreateSitePage } from "../support/pom/sites/createSite.page";
 import { UpdateSitePage } from "../support/pom/sites/UpdateSite.page";
 import { DeleteSitePage } from "../support/pom/sites/DeleteSite.page";
 import { SitesPage } from "../support/pom/sites/Sites.page";
