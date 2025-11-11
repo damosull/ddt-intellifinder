@@ -3,6 +3,8 @@ export class SitesPage {
     siteNameOnList = () => cy.get('.btnViewSite')
     tableCell = () => cy.get('tbody td')
     noResultsFooter = () => cy.get('.footable-empty').contains('No results.')
+    btnEditDetail = () => cy.get('[title="Edit site"]');
+
 
     searchSite(siteName, latitude, longitude) {
         cy.intercept('POST', '/api/site/sites').as('searchRequest');
@@ -19,4 +21,9 @@ export class SitesPage {
         cy.wait('@searchRequest').its('response.statusCode').should('eq', 200);
         this.noResultsFooter().should('be.visible')
     }
+    verfiyEditButtonVisibility()
+    {
+        this.btnEditDetail().should('be.visible')
+    }
+
 }

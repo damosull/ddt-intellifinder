@@ -7,10 +7,11 @@ export class CreateCategoryPage {
 
     createCategory(categoryName) {
         this.txtCategoryName().type(categoryName)
-        this.sltSubCategory().click()
-        this.txtSearchSubCategory().type('test')
-        cy.wait('@allCategories').its('response.statusCode').should('eq', 200);
-        this.sltOptions().eq(0).click()
+        // Currently we don't have subcategory available
+        // this.sltSubCategory().click()
+        // this.txtSearchSubCategory().type('test')
+        // cy.wait('@allCategories').its('response.statusCode').should('eq', 200);
+        // this.sltOptions().eq(0).click()
         this.btnSave().click()
         cy.wait('@allCategories').its('response.statusCode').should('eq', 200);
     }

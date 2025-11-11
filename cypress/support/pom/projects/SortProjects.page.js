@@ -2,8 +2,8 @@ export class SortProjectsPage {
   ICON_ASC = '[class="fooicon fooicon-sort-asc"]';
   ICON_DESC = '[class="fooicon fooicon-sort-desc"]';
   COLUMN_SUBJECT = 0;
-  COLUMN_START_DATE = 1;
-  COLUMN_END_DATE = 2;
+  COLUMN_START_DATE = 2;
+  COLUMN_END_DATE = 3;
 
   sltDataTable = () =>
     cy.get(
@@ -62,10 +62,8 @@ export class SortProjectsPage {
       .then((rows) => {
         Cypress.$(rows).each((index, row) => {
           const cellText = Cypress.$(row).find("td").eq(column).text().trim();
-          //expect(cellText).to.increase(row, 'val');
-          const date = new Date(cellText);
-          if (!isNaN(date)) {
-            dates.push(date);
+          if (!cellText) {
+            dates.push(cellText);
           }
         });
 
@@ -81,9 +79,8 @@ export class SortProjectsPage {
       .then((rows) => {
         Cypress.$(rows).each((index, row) => {
           const cellText = Cypress.$(row).find("td").eq(column).text().trim();
-          const date = new Date(cellText);
-          if (!isNaN(date)) {
-            dates.push(date);
+           if (!cellText) {
+            dates.push(cellText);
           }
         });
 

@@ -2,7 +2,7 @@
 import { LoginPage } from "../support/pom/Login.page";
 import { SideMenuPage } from "../support/pom/SideMenu.page";
 
-import { CreateSitePage } from "../support/pom/sites/CreateSite.page";
+import { CreateSitePage } from "../support/pom/sites/createSite.page";
 import { UpdateSitePage } from "../support/pom/sites/UpdateSite.page";
 import { DeleteSitePage } from "../support/pom/sites/DeleteSite.page";
 import { SitesPage } from "../support/pom/sites/Sites.page";
@@ -38,8 +38,9 @@ describe("Sites Test Suite", () => {
   });
 
   it("Edit Site via Sites List page", () => {
-    const siteName = `Site to be updated - ${timestamp}`;
-    const updatedSiteName = `Updated Site - ${timestamp}`;
+    const timeStampToEditSite = timestamp;
+    const siteName = `Site to be updated - ${timeStampToEditSite}`;
+    const updatedSiteName = `Updated Site - ${timeStampToEditSite}`;
     createSitePage.createSite(siteName, latitude, longitude);
     let updatedLatitude = 35.689487;
     let updatedLongitude = 139.691711;
@@ -50,7 +51,8 @@ describe("Sites Test Suite", () => {
       updatedLatitude,
       updatedLongitude
     );
-    breadCrumbPage.sitesBreadcrumb().click();
+    sitePage.verfiyEditButtonVisibility()
+    breadCrumbPage.sitesBreadcrumb().click();    
     sitePage.searchSite(updatedSiteName, updatedLatitude, updatedLongitude);
   });
 

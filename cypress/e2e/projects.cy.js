@@ -13,6 +13,10 @@ import { EditProjectPage } from "../support/pom/projects/EditProject.page.js";
 import { ProjectInformationPopup } from "../support/pom/projects/ProjectInformationPopup.page.js";
 import { AddTaskPopup } from "../support/pom/projects/AddTaskPopup.page.js";
 import { ProjectsCommon } from "../support/pom/projects/ProjectsCommon.page.js";
+import { CreateCategoryPage } from "../support/pom/category/CreateCategory.page.js";
+import { CreateSitePage } from "../support/pom/sites/createSite.page.js";
+import { CategoriesPage } from "../support/pom/category/Categories.page";
+
 
 describe("Projects Test Suite", () => {
   const loginPage = new LoginPage();
@@ -33,6 +37,11 @@ describe("Projects Test Suite", () => {
   const projectDescription = "test";
   const searchName = "Cypress Created Name";
   const taskName = "Cypress Created Task";
+  const longitude = -74.005974;
+  const latitude = 40.712776;
+  const categoriesPage = new CategoriesPage();  
+  const createCategoryPage = new CreateCategoryPage();
+  const createSitePage = new CreateSitePage();
 
   deleteDownloadsFolderBeforeEach();
 
@@ -164,6 +173,12 @@ describe("Projects Test Suite", () => {
     });
 
     it("Add task to project using only required fields", () => {
+      //  To create the Category and Site
+      // sideMenuPage.openCategoriesPage();
+      // categoriesPage.openCreateCategoryPage();
+      // createCategoryPage.createCategory("Test Category");
+      // sideMenuPage.openSitesPage();
+      // createSitePage.createSite("Test Site", latitude, longitude);
       sideMenuPage.openProjectsPage();
       ProjectsCommon.searchProjects(searchName);
       projectsPage.clickFirstProjectName();
@@ -197,10 +212,10 @@ describe("Projects Test Suite", () => {
         .header()
         .should("be.visible")
         .and("have.text", "Edit project");
-      editProjectPage.editProject("updated name");
+      editProjectPage.editProject("updated description");
 
       // IMPROVEMENT: In above 'editProject', we need to update more fields as part of this test
       // IMPROVEMENT: We need to search for the project and verify the updates were made via the UI
     });
   });
-});
+ });
