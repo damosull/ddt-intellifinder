@@ -21,7 +21,7 @@ export class CreateSitePage {
 
 
   createSite(siteName, latitude, longitude) {
-    this.btnCreateNewSite().click();
+    // this.btnCreateNewSite().click();
     
     
     this.txtSiteName().clear().type(siteName);
@@ -29,7 +29,7 @@ export class CreateSitePage {
     // this.txtLongitude().clear().type(longitude);
     this.selectCategory().click();
     cy.intercept("POST", "/api/categories/all_categories").as("postRequest");
-    this.txtCategorySearch().type("Default");
+    this.txtCategorySearch().type("Test");
     cy.wait("@postRequest").its("response.statusCode").should("eq", 200);
     cy.wait(100);
     this.locationLoader().should('not.exist');

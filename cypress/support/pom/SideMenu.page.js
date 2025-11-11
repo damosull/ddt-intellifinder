@@ -1,9 +1,13 @@
 export class SideMenuPage {
   navbarToggle = () => cy.get(".navbar-toggle", { timeout: 20000 });
   categoriesLink = () => cy.contains("Categories");
-  sitesLink = () => cy.contains("Sites");
+  sitesLink = () => cy.get('[href="#dropdown-lvl1"]');
   multiSitesLink = () => cy.contains("Multi-Sites");
   projectsLink = () => cy.contains("Projects");
+  viewAllLink = () => cy.contains("View all");
+  nearestLink = () => cy.contains("Nearest");
+
+
   viewAllProjectsLink = () =>
     cy.get('[routerlink="/projects/list-projects/latest"]');
   viewArchivedProjectsLink = () =>
@@ -13,14 +17,20 @@ export class SideMenuPage {
 
   openCategoriesPage() {
     cy.intercept("api/categories/all_categories").as("allCategories");
-    this.navbarToggle().click();
     this.categoriesLink().click();
     cy.wait("@allCategories").its("response.statusCode").should("eq", 200);
   }
 
-  openSitesPage() {
-    this.navbarToggle().click();
-    this.sitesLink().click({force:true});
+  openViewAllSitesPage() {
+    cy.intercept("/api/site/sites").as("allSites");
+    this.sitesLink().click();
+    this.viewAllLink().click();
+    cy.wait("@allSites").its("response.statusCode").should("eq", 200);
+  }
+  
+  openSiteOptionFromSideMenu(SiteOption) {
+    this.sitesLink().click();
+    cy.contains(SiteOption).click();
   }
 
   openMultiSitesPage() {
@@ -28,6 +38,13 @@ export class SideMenuPage {
     this.navbarToggle().click();
     this.multiSitesLink().click();
     cy.wait("@allMultiSites").its("response.statusCode").should("eq", 200);
+  }
+
+  openNearestSitePage() {
+    cy.intercept("/api/site/sites").as("allSites");
+    this.sitesLink().click();
+    this.nearestLink().click();
+    cy.wait("@allSites").its("response.statusCode").should("eq", 200);
   }
 
   openProjectsPage() {

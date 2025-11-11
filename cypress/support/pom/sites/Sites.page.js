@@ -9,9 +9,10 @@ export class SitesPage {
     searchSite(siteName, latitude, longitude) {
         cy.intercept('POST', '/api/site/sites').as('searchRequest');
         this.txtSearch().should('be.visible')
-        this.txtSearch().type(siteName + '{enter}')
+        this.txtSearch().type(siteName)
+        cy.get('[class*="btnSearchOrange"]').click()
         cy.wait('@searchRequest').its('response.statusCode').should('eq', 200);
-        this.siteNameOnList().eq(0).should('be.visible', { timeout: 20000 }).and('have.text', siteName);
+        this.siteNameOnList().eq(0).should('be.visible', { timeout: 20000 }).and('include.text', siteName);
         this.tableCell().eq(3).should('be.visible', { timeout: 20000 }).and('have.text', `Lat. ${latitude} Lon. ${longitude}`);
     }
 

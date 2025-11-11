@@ -16,6 +16,8 @@ module.exports = defineConfig({
     defaultCommandTimeout: 20000,
     pageLoadTimeout: 120000,
     responseTimeout: 30000,
+    viewportWidth: 1920,
+    viewportHeight: 1080,
     setupNodeEvents(on, config) {
       // implement node event listeners here
       mochawesomeReporter(on);

@@ -3,9 +3,7 @@ export class SitesNearestPage {
     siteNames = () => cy.get('tr td a.orange');
 
     openAndVerifyDistancesInAscendingOrder() {
-        this.btnNearest().click();
         const distances = [];
-
         // Get the distance of each site
         this.siteNames().each(($el) => {
             const text = $el.text();
@@ -21,11 +19,14 @@ export class SitesNearestPage {
         }).then(() => {
             // Sort the distances in ascending order
             const sortedDistances = [...distances].sort((a, b) => a - b);
+          return sortedDistances;
+        }).then((sortedDistances) => {
+        
             cy.log(`Collected distances: ${distances.join(', ')}`);
             cy.log(`Sorted distances: ${sortedDistances.join(', ')}`);
 
             // Assert that the distances are in ascending order
-            expect(distances).to.deep.equal(sortedDistances);
-        });
+            expect(distances).to.deep.equal(sortedDistances);  
+        })  
     }
 }

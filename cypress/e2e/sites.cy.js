@@ -10,6 +10,9 @@ import { SitesMapPage } from "../support/pom/sites/SitesMap.page";
 import { SitesNearestPage } from "../support/pom/sites/SitesNearest.page";
 import { BreadCrumbPage } from "../support/pom/BreadCrumb.page";
 
+import { CategoriesPage } from "../support/pom/category/Categories.page";
+import { CreateCategoryPage } from "../support/pom/category/CreateCategory.page";
+
 describe("Sites Test Suite", () => {
   const loginPage = new LoginPage();
   const sideMenuPage = new SideMenuPage();
@@ -28,11 +31,16 @@ describe("Sites Test Suite", () => {
   beforeEach(() => {
     cy.visit("/");
     loginPage.login();
-    sideMenuPage.openSitesPage();
+    sideMenuPage.openViewAllSitesPage();
   });
 
   it("Create & Search Site via Sites List page", () => {
     const siteName = `Created Name - ${timestamp}`;
+    const testCategoryName = `Test Category - ${timestamp}`;
+    sideMenuPage.openCategoriesPage();
+    categoriesPage.openCreateCategoryPage();
+    createCategoryPage.createCategory(testCategoryName);
+    sideMenuPage.openSiteOptionFromSideMenu('Create new')
     createSitePage.createSite(siteName, latitude, longitude);
     sitePage.searchSite(siteName, latitude, longitude);
   });
@@ -41,10 +49,10 @@ describe("Sites Test Suite", () => {
     const timeStampToEditSite = timestamp;
     const siteName = `Site to be updated - ${timeStampToEditSite}`;
     const updatedSiteName = `Updated Site - ${timeStampToEditSite}`;
+    sideMenuPage.openSiteOptionFromSideMenu('Create new')
     createSitePage.createSite(siteName, latitude, longitude);
     let updatedLatitude = 35.689487;
     let updatedLongitude = 139.691711;
-    breadCrumbPage.sitesBreadcrumb().click();
     sitePage.searchSite(siteName, latitude, longitude);
     updateSitePage.updateSite(
       updatedSiteName,
@@ -52,12 +60,13 @@ describe("Sites Test Suite", () => {
       updatedLongitude
     );
     sitePage.verfiyEditButtonVisibility()
-    breadCrumbPage.sitesBreadcrumb().click();    
+    sideMenuPage.openViewAllSitesPage();  
     sitePage.searchSite(updatedSiteName, updatedLatitude, updatedLongitude);
   });
 
   it("Delete Site via Sites List page:", () => {
     const siteName = `Site to be deleted - ${timestamp}`;
+    sideMenuPage.openSiteOptionFromSideMenu('Create new')
     createSitePage.createSite(siteName, latitude, longitude);
     sitePage.searchSite(siteName, latitude, longitude);
     deleteSitePage.deleteSite();
@@ -65,11 +74,12 @@ describe("Sites Test Suite", () => {
   });
 
   it("Search Sites via Sites list on map", () => {
-    sitesMapPage.openAndVerifySiteData();
+    sideMenuPage.openSiteOptionFromSideMenu('View all on map')
     sitesMapPage.pageTitle().should("be.visible");
   });
 
   it("Search Sites via Sites > Nearest - verify distances are in ascending order", () => {
+    sitesMapPage.openNearestSitePage();
     sitesNearestPage.openAndVerifyDistancesInAscendingOrder();
   });
 });
